@@ -15,6 +15,8 @@ import { AppModule } from './app.module';
   const swaggerConfig = new DocumentBuilder()
     .setTitle('FileBuddy Service')
     .setVersion('1.0')
+    .addTag('Authentication')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api_docs', app, document);

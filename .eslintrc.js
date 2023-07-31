@@ -12,6 +12,8 @@ module.exports = {
   extends: [
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
   ],
   root: true,
   env: {
@@ -24,7 +26,17 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'import/no-internal-modules': ['error', {
+      'allow': ['rxjs/operators'],
+    }],
+    'import/no-relative-parent-imports': 'off',
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error'
   },
+  'settings': {
+    'import/resolver': {
+      'typescript': true,
+      'node': true,
+    }
+  }
 };

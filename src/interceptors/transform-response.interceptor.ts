@@ -24,6 +24,15 @@ export class TransformResponseInterceptor<T>
   implements NestInterceptor<T, ResponseData<T>>
 {
   /**
+   * Constructs a new instance of `TransformResponseInterceptor`, and binds the `this` context
+   * for the `transformToSnakeCase` method to the instance of the class. This is necessary to ensure
+   * that the method has the correct `this` context when it's used within a callback in `pipe(map())`.
+   */
+  constructor() {
+    this.transformToSnakeCase = this.transformToSnakeCase.bind(this);
+  }
+
+  /**
    * Method that is called for each request.
    *
    * @param context The execution context.

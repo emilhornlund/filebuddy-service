@@ -7,13 +7,14 @@ module.exports = {
   },
   plugins: [
     '@typescript-eslint/eslint-plugin',
-    'simple-import-sort'
+    'simple-import-sort',
+    'prettier',
   ],
   extends: [
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
     'plugin:import/recommended',
     'plugin:import/typescript',
+    'prettier',
   ],
   root: true,
   env: {
@@ -22,6 +23,7 @@ module.exports = {
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
+    'prettier/prettier': 'error',
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -33,10 +35,12 @@ module.exports = {
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error'
   },
-  'settings': {
-    'import/resolver': {
-      'typescript': true,
-      'node': true,
-    }
-  }
+  settings: {
+    import: {
+      resolver: {
+        typescript: {},
+        node: {},
+      },
+    },
+  },
 };

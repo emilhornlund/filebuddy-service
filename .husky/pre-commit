@@ -3,4 +3,3 @@
 
 yarn eslint "{src,apps,libs,test}/**/*.ts"
 yarn test
-yarn test:e2e

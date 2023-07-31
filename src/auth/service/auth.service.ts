@@ -87,10 +87,7 @@ export class AuthService {
     );
 
     const payload: JwtPayloadDto = {
-      authorities:
-        type === 'access'
-          ? [AuthoritiesDto.HELLO_WORLD]
-          : [AuthoritiesDto.REFRESH],
+      authorities: type === 'access' ? [] : [AuthoritiesDto.REFRESH],
     };
 
     return this.jwtService.signAsync(payload, {

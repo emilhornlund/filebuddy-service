@@ -4,13 +4,11 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 import * as Joi from 'joi';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AuthModule } from './auth';
+import { AuthModule } from '../../auth';
 import {
   TransformRequestInterceptor,
   TransformResponseInterceptor,
-} from './interceptors';
+} from '../interceptor';
 
 const DEFAULT_ENVIRONMENT = 'development';
 
@@ -55,7 +53,7 @@ const DEFAULT_ENVIRONMENT = 'development';
     }),
     AuthModule,
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [
     {
       provide: APP_INTERCEPTOR,
@@ -65,7 +63,6 @@ const DEFAULT_ENVIRONMENT = 'development';
       provide: APP_INTERCEPTOR,
       useClass: TransformResponseInterceptor,
     },
-    AppService,
   ],
 })
 export class AppModule {}

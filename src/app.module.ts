@@ -12,6 +12,8 @@ import {
   TransformResponseInterceptor,
 } from './interceptors';
 
+const DEFAULT_ENVIRONMENT = 'development';
+
 /**
  * The root module of the application. It imports other modules,
  * sets up global configuration, and registers application-wide providers.
@@ -21,11 +23,11 @@ import {
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.development.env',
+      envFilePath: `.${process.env.NODE_ENV ?? DEFAULT_ENVIRONMENT}.env`,
       validationSchema: Joi.object({
         NODE_ENV: Joi.string()
           .valid('development', 'production', 'test')
-          .default('development'),
+          .default(DEFAULT_ENVIRONMENT),
         HTTP_PORT: Joi.number().default(8080),
         SECURITY_JWT_SECRET: Joi.string(),
         SECURITY_JWT_PUBLIC_KEY: Joi.string(),

@@ -6,6 +6,9 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+/**
+ * Entity for the files in the database, including properties for identification, name, size, path, and timestamps.
+ */
 @Entity()
 export class FileEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -16,6 +19,9 @@ export class FileEntity {
 
   @Column()
   path: string;
+
+  @Column()
+  size: number;
 
   @CreateDateColumn()
   createdAt: Date;

@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 
 import { AuthModule } from '../../auth';
+import { FileModule } from '../../file';
 import { AllExceptionsFilter } from '../filter';
 import {
   TransformRequestInterceptor,
@@ -67,6 +68,7 @@ const DEFAULT_ENVIRONMENT = 'development';
       inject: [ConfigService],
     }),
     AuthModule,
+    FileModule,
   ],
   controllers: [],
   providers: [

@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
 import * as Joi from 'joi';
 
 import { AuthModule } from '../../auth';
+import { AllExceptionsFilter } from '../filter';
 import {
   TransformRequestInterceptor,
   TransformResponseInterceptor,
 } from '../interceptor';
+import { ValidationTransformPipe } from '../pipe';
 
 const DEFAULT_ENVIRONMENT = 'development';
 
@@ -56,12 +58,20 @@ const DEFAULT_ENVIRONMENT = 'development';
   controllers: [],
   providers: [
     {
+      provide: APP_FILTER,
+      useClass: AllExceptionsFilter,
+    },
+    {
       provide: APP_INTERCEPTOR,
       useClass: TransformRequestInterceptor,
     },
     {
       provide: APP_INTERCEPTOR,
       useClass: TransformResponseInterceptor,
+    },
+    {
+      provide: APP_PIPE,
+      useClass: ValidationTransformPipe,
     },
   ],
 })

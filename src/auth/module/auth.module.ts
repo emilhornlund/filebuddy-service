@@ -45,6 +45,11 @@ const readFile = async (filePath?: string): Promise<Buffer | undefined> => {
           audience: configService.get<string>('NODE_ENV'),
           issuer: configService.get<string>('SECURITY_JWT_ISSUER'),
         },
+        verifyOptions: {
+          algorithm: 'HS512',
+          audience: configService.get<string>('NODE_ENV'),
+          issuer: configService.get<string>('SECURITY_JWT_ISSUER'),
+        },
       }),
       inject: [ConfigService],
     }),

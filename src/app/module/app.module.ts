@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 
 import { AuthModule } from '../../auth';
@@ -41,6 +42,9 @@ const DEFAULT_ENVIRONMENT = 'development';
           Joi.string(),
           Joi.number(),
         ).default('30d'),
+        DB_TYPE: Joi.string().valid('sqlite').default('sqlite'),
+        DB_DATABASE: Joi.string().required(),
+        DB_SYNCHRONIZE: Joi.bool().default(false),
       }),
       validationOptions: {
         allowUnknown: true,
@@ -52,6 +56,15 @@ const DEFAULT_ENVIRONMENT = 'development';
     ThrottlerModule.forRoot({
       ttl: 60,
       limit: 10,
+    }),
+    TypeOrmModule.forRootAsync({
+      useFactory: async (configService: ConfigService) => ({
+        type: configService.get<'sqlite'>('DB_TYPE'),
+        database: configService.get<string>('DB_DATABASE'),
+        synchronize: configService.get<boolean>('DB_SYNCHRONIZE'),
+        autoLoadEntities: true,
+      }),
+      inject: [ConfigService],
     }),
     AuthModule,
   ],

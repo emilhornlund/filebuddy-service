@@ -4,7 +4,7 @@ import {
   Injectable,
   NestInterceptor,
 } from '@nestjs/common';
-import { isObject, mapKeys, snakeCase } from 'lodash';
+import { isDate, isObject, snakeCase } from 'lodash';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -12,7 +12,7 @@ export type ResponseData<T> = T | Record<string, any>;
 
 /**
  * An interceptor that transforms outgoing response data, converting
- * all keys to snake_case.
+ * all keys to snake_case. It also converts date objects to ISO strings.
  *
  * @template T The type of the data to transform.
  *
@@ -47,24 +47,34 @@ export class TransformResponseInterceptor<T>
   }
 
   /**
-   * Recursively transforms all keys in a data structure to snake_case.
+   * Recursively transforms all keys in a data structure to snake_case and converts Date objects to ISO strings.
    *
-   * @param data The data to transform.
-   * @returns The transformed data.
+   * Iterates over data and applies the following transformations:
+   * 1. If an item is an array, maps through the array and applies `transformToSnakeCase` recursively.
+   * 2. If an item is an object, transforms all keys to snake_case.
+   * 3. If the value of a key in the object is also an object (and not an array), applies `transformToSnakeCase` recursively.
+   * 4. If the value of a key in the object is an instance of Date, converts it to an ISO string.
+   *
+   * @param {ResponseData<T>} data The data to transform.
+   * @returns {ResponseData<T>} The transformed data with all keys in snake_case and all Date objects converted to ISO strings.
    */
   transformToSnakeCase(data: ResponseData<T>): ResponseData<T> {
     if (Array.isArray(data)) {
-      return data.map(this.transformToSnakeCase);
+      return data.map((item) => this.transformToSnakeCase(item));
     } else if (isObject(data)) {
-      const transformed = mapKeys(data, (_, key) => snakeCase(String(key)));
-      for (const key in transformed) {
-        if (isObject(transformed[key])) {
-          transformed[key] = this.transformToSnakeCase(transformed[key]);
+      return Object.keys(data).reduce((result, key) => {
+        let value = data[key];
+        if (Array.isArray(value)) {
+          value = value.map((item) => this.transformToSnakeCase(item));
+        } else if (isDate(value)) {
+          value = value.toISOString();
+        } else if (isObject(value)) {
+          value = this.transformToSnakeCase(value);
         }
-      }
-      return transformed;
-    } else {
-      return data;
+        result[snakeCase(key)] = value;
+        return result;
+      }, {});
     }
+    return data;
   }
 }

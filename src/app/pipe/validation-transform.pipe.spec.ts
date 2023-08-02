@@ -21,7 +21,7 @@ describe('ValidationTransformPipe', () => {
     // Mock the validate function to return an empty array
     jest.spyOn(classValidator, 'validate').mockResolvedValue([]);
 
-    expect(await validationTransformPipe.transform(value, metadata)).toBe(
+    expect(await validationTransformPipe.transform(value, metadata)).toEqual(
       value,
     );
   });
@@ -38,6 +38,48 @@ describe('ValidationTransformPipe', () => {
       { property: 'prop', constraints: { isString: 'prop must be a string' } },
     ];
     jest.spyOn(classValidator, 'validate').mockResolvedValue(errors);
+
+    await expect(
+      validationTransformPipe.transform(value, metadata),
+    ).rejects.toThrow(ValidationFailedException);
+  });
+
+  it('should return the original value when metatype is not provided', async () => {
+    const value = { prop: 'value without metatype' };
+    const metadata: ArgumentMetadata = {
+      type: 'body',
+      metatype: null,
+      data: '',
+    };
+
+    const result = await validationTransformPipe.transform(value, metadata);
+
+    expect(result).toEqual(value);
+  });
+
+  it('should return the original value when metatype is a basic type', async () => {
+    const value = 'value with basic metatype';
+    const metadata: ArgumentMetadata = {
+      type: 'body',
+      metatype: String,
+      data: '',
+    };
+
+    const result = await validationTransformPipe.transform(value, metadata);
+
+    expect(result).toEqual(value);
+  });
+
+  it('should throw a ValidationFailedException if the class-validator validate function throws an error', async () => {
+    const value = { prop: 'value that causes validate to throw' };
+    const metatype = class {
+      prop: string;
+    };
+    const metadata: ArgumentMetadata = { type: 'body', metatype, data: '' };
+
+    jest
+      .spyOn(classValidator, 'validate')
+      .mockRejectedValue(new Error('Mock error'));
 
     await expect(
       validationTransformPipe.transform(value, metadata),

@@ -18,12 +18,14 @@ export class FileDto {
 
   @ApiProperty({
     description: 'The date and time the file was created',
+    type: Date,
     required: true,
   })
   createdAt: Date;
 
   @ApiProperty({
     description: 'The date and time the file was last updated',
+    type: Date,
     required: true,
   })
   updatedAt: Date;

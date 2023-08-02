@@ -4,7 +4,7 @@ import { Like, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 import { FileNotFoundException } from '../exception';
-import { FileEntity } from '../model';
+import { FileEntity, FileSortDirection, FileSortOrder } from '../model';
 import { FileService } from './file.service';
 
 describe('FileService', () => {
@@ -70,7 +70,13 @@ describe('FileService', () => {
       const spy = jest
         .spyOn(repository, 'findAndCount')
         .mockResolvedValue([[], 0]);
-      await service.findAll(1, 5, 'name', 'ASC', 'test');
+      await service.findAll(
+        1,
+        5,
+        FileSortOrder.NAME,
+        FileSortDirection.ASC,
+        'test',
+      );
 
       expect(spy).toHaveBeenCalledWith({
         where: { name: Like('%test%') },

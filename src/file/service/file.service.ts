@@ -3,7 +3,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 
 import { FileNotFoundException } from '../exception';
-import { FileDto, FileEntity, FilePageDto } from '../model';
+import {
+  FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION,
+  FILE_QUERY_DEFAULT_FILE_SORT_ORDER,
+  FILE_QUERY_DEFAULT_PAGE,
+  FILE_QUERY_DEFAULT_PAGE_SIZE,
+  FileDto,
+  FileEntity,
+  FilePageDto,
+  FileSortDirection,
+  FileSortOrder,
+} from '../model';
 
 /**
  * A service that handles file-related operations.
@@ -25,30 +35,30 @@ export class FileService {
    * @param page - The number of the page to fetch. Defaults to 0.
    * @param size - The number of items per page. Defaults to 10.
    * @param order - The field by which to order the results. Defaults to 'createdAt'.
-   * @param orderType - The order type (ASC or DESC). Defaults to 'DESC'.
+   * @param direction - The order type (ASC or DESC). Defaults to 'DESC'.
    * @param nameFilter - Optional name filter to apply to the file names.
    * @returns - A promise that will resolve to a `FilePageDto` containing the fetched files and page information.
    */
   public async findAll(
-    page: number = 0,
-    size: number = 10,
-    order: 'name' | 'size' | 'createdAt' | 'updatedAt' = 'createdAt',
-    orderType: 'ASC' | 'DESC' = 'DESC',
+    page: number = FILE_QUERY_DEFAULT_PAGE,
+    size: number = FILE_QUERY_DEFAULT_PAGE_SIZE,
+    order: FileSortOrder = FILE_QUERY_DEFAULT_FILE_SORT_ORDER,
+    direction: FileSortDirection = FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION,
     nameFilter?: string,
   ): Promise<FilePageDto> {
     const skip = page * size;
 
-    const orderObject = {};
-    orderObject[order] = orderType;
+    const orderParams = {};
+    orderParams[FileService.toEntitySortOrder(order)] = direction;
 
-    const whereObject = {};
+    const queryCondition = {};
     if (nameFilter) {
-      whereObject['name'] = Like(`%${nameFilter}%`);
+      queryCondition['name'] = Like(`%${nameFilter}%`);
     }
 
     const [results, totalElements] = await this.filesRepository.findAndCount({
-      where: whereObject,
-      order: orderObject,
+      where: queryCondition,
+      order: orderParams,
       take: size,
       skip,
     });
@@ -95,4 +105,34 @@ export class FileService {
       updatedAt,
     };
   }
+
+  /**
+   * Converts a `FileSortOrder` enum into the corresponding `FileEntity` property.
+   *
+   * @param fileSortOrder - The order in which to sort files. This is an optional parameter that defaults to `FILE_QUERY_DEFAULT_FILE_SORT_ORDER`.
+   *
+   * @returns A string representing the property of `FileEntity` to which `fileSortOrder` corresponds.
+   * This can be 'name', 'size', 'updatedAt', or 'createdAt'.
+   *
+   * @example
+   * ```
+   * const sortOrder = toEntitySortOrder(FileSortOrder.NAME);
+   * console.log(sortOrder); // Outputs: 'name'
+   * ```
+   */
+  private static toEntitySortOrder = (
+    fileSortOrder: FileSortOrder,
+  ): keyof Pick<FileEntity, 'name' | 'size' | 'updatedAt' | 'createdAt'> => {
+    switch (fileSortOrder) {
+      case FileSortOrder.NAME:
+        return 'name';
+      case FileSortOrder.SIZE:
+        return 'size';
+      case FileSortOrder.UPDATED_AT:
+        return 'updatedAt';
+      case FileSortOrder.CREATED_AT:
+      default:
+        return 'createdAt';
+    }
+  };
 }

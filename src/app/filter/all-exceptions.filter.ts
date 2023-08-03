@@ -8,6 +8,7 @@ import {
 import { HttpAdapterHost } from '@nestjs/core';
 
 import { ValidationFailedException } from '../exception';
+import { ResponseTransformer } from '../utility';
 
 /**
  * Exception filter that handles all exceptions thrown in the application.
@@ -63,6 +64,8 @@ export class AllExceptionsFilter implements ExceptionFilter {
       timestamp: new Date().toISOString(),
     };
 
-    httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
+    const transformedResponseBody =
+      ResponseTransformer.transformToSnakeCase(responseBody);
+    httpAdapter.reply(ctx.getResponse(), transformedResponseBody, httpStatus);
   }
 }

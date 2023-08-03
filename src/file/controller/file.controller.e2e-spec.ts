@@ -141,10 +141,10 @@ describe('FileController (e2e)', () => {
             expect.objectContaining({
               message: 'Validation failed',
               timestamp: expect.any(String),
-              validationErrors: [
+              validation_errors: [
                 {
                   constraints: {
-                    isInt: 'page must be an integer number',
+                    is_int: 'page must be an integer number',
                     min: 'page must not be less than 0',
                   },
                   property: 'page',
@@ -183,7 +183,7 @@ describe('FileController (e2e)', () => {
             expect.objectContaining({
               message: 'Validation failed',
               timestamp: expect.any(String),
-              validationErrors: [
+              validation_errors: [
                 {
                   constraints: {
                     min: 'page must not be less than 0',
@@ -224,10 +224,10 @@ describe('FileController (e2e)', () => {
             expect.objectContaining({
               message: 'Validation failed',
               timestamp: expect.any(String),
-              validationErrors: [
+              validation_errors: [
                 {
                   constraints: {
-                    isInt: 'size must be an integer number',
+                    is_int: 'size must be an integer number',
                     max: 'size must not be greater than 50',
                     min: 'size must not be less than 10',
                   },
@@ -267,7 +267,7 @@ describe('FileController (e2e)', () => {
             expect.objectContaining({
               message: 'Validation failed',
               timestamp: expect.any(String),
-              validationErrors: [
+              validation_errors: [
                 {
                   constraints: {
                     min: 'size must not be less than 10',
@@ -291,7 +291,7 @@ describe('FileController (e2e)', () => {
             expect.objectContaining({
               message: 'Validation failed',
               timestamp: expect.any(String),
-              validationErrors: [
+              validation_errors: [
                 {
                   constraints: {
                     max: 'size must not be greater than 50',
@@ -429,10 +429,10 @@ describe('FileController (e2e)', () => {
             expect.objectContaining({
               message: 'Validation failed',
               timestamp: expect.any(String),
-              validationErrors: [
+              validation_errors: [
                 {
                   constraints: {
-                    isEnum:
+                    is_enum:
                       'order must be one of the following values: NAME, SIZE, CREATED_AT, UPDATED_AT',
                   },
                   property: 'order',
@@ -509,10 +509,10 @@ describe('FileController (e2e)', () => {
             expect.objectContaining({
               message: 'Validation failed',
               timestamp: expect.any(String),
-              validationErrors: [
+              validation_errors: [
                 {
                   constraints: {
-                    isUuid: 'fileId must be a UUID',
+                    is_uuid: 'fileId must be a UUID',
                   },
                   property: 'fileId',
                 },

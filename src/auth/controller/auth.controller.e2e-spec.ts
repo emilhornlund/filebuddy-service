@@ -54,16 +54,16 @@ describe('AuthController (e2e)', () => {
         .expect(HttpStatus.BAD_REQUEST)
         .then((response) => {
           expect(response.body).toHaveProperty('message', 'Validation failed');
-          expect(response.body).toHaveProperty('validationErrors', [
+          expect(response.body).toHaveProperty('validation_errors', [
             {
               constraints: {
-                isNotEmpty: 'username should not be empty',
+                is_not_empty: 'username should not be empty',
               },
               property: 'username',
             },
             {
               constraints: {
-                isNotEmpty: 'password should not be empty',
+                is_not_empty: 'password should not be empty',
               },
               property: 'password',
             },

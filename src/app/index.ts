@@ -4,3 +4,4 @@ export * from './interceptor';
 export * from './model';
 export * from './module';
 export * from './pipe';
+export * from './utility';

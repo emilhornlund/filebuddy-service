@@ -54,9 +54,9 @@ describe('AllExceptionsFilter', () => {
       expect.objectContaining({
         message: 'Validation failed',
         timestamp: expect.any(String),
-        validationErrors: [
+        validation_errors: [
           {
-            constraints: { isString: 'prop must be a string' },
+            constraints: { is_string: 'prop must be a string' },
             property: 'prop',
           },
         ],

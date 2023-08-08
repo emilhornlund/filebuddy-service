@@ -24,7 +24,7 @@ describe('AuthController (e2e)', () => {
         .post('/auth/token')
         .send({
           username: 'testUser',
-          password: 'testPass',
+          password: 'testPass1$',
         })
         .expect(HttpStatus.OK)
         .then((response) => {
@@ -38,7 +38,7 @@ describe('AuthController (e2e)', () => {
         .post('/auth/token')
         .send({
           username: 'invalidUser',
-          password: 'invalidPass',
+          password: 'invalidPass123@',
         })
         .expect(HttpStatus.UNAUTHORIZED)
         .then((response) => {
@@ -58,12 +58,17 @@ describe('AuthController (e2e)', () => {
             {
               constraints: {
                 is_not_empty: 'username should not be empty',
+                is_length: 'username must be between 4 and 20 characters',
+                matches: 'username must contain only alphanumeric characters',
               },
               property: 'username',
             },
             {
               constraints: {
                 is_not_empty: 'password should not be empty',
+                is_length: 'password must be between 8 and 30 characters',
+                matches:
+                  'password must have at least one uppercase letter, one lowercase letter, one number, and one special character',
               },
               property: 'password',
             },
@@ -80,7 +85,7 @@ describe('AuthController (e2e)', () => {
         .post('/auth/token')
         .send({
           username: 'testUser',
-          password: 'testPass',
+          password: 'testPass1$',
         })
         .then((response) => {
           refreshToken = response.body.refresh_token;
@@ -102,7 +107,7 @@ describe('AuthController (e2e)', () => {
         .post('/auth/token')
         .send({
           username: 'testUser',
-          password: 'testPass',
+          password: 'testPass1$',
         })
         .then((response) => {
           access_token = response.body.access_token;

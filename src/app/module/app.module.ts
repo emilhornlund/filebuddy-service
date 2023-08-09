@@ -7,6 +7,7 @@ import * as Joi from 'joi';
 
 import { AuthModule } from '../../auth';
 import { FileModule } from '../../file';
+import { LibraryModule } from '../../library';
 import { AllExceptionsFilter } from '../filter';
 import {
   TransformRequestInterceptor,
@@ -69,6 +70,7 @@ const DEFAULT_ENVIRONMENT = 'development';
     }),
     AuthModule,
     FileModule,
+    LibraryModule,
   ],
   controllers: [],
   providers: [

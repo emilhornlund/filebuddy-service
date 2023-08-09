@@ -89,7 +89,7 @@ export class AuthService {
     const payload: JwtPayloadDto = {
       authorities:
         type === 'access'
-          ? [AuthoritiesDto.FILE_MANAGEMENT]
+          ? [AuthoritiesDto.FILE_MANAGEMENT, AuthoritiesDto.LIBRARY_MANAGEMENT]
           : [AuthoritiesDto.REFRESH],
     };
 

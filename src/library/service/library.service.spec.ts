@@ -1,10 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 import { PathNotUniqueException } from '../exception';
-import { LibraryEntity } from '../model';
+import {
+  LibraryEntity,
+  LibrarySortDirection,
+  LibrarySortOrder,
+} from '../model';
 import { LibraryService } from './library.service';
 
 describe('LibraryService', () => {
@@ -26,6 +30,11 @@ describe('LibraryService', () => {
     repository = module.get<Repository<LibraryEntity>>(
       getRepositoryToken(LibraryEntity),
     );
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+    expect(repository).toBeDefined();
   });
 
   describe('createLibrary', () => {
@@ -59,6 +68,63 @@ describe('LibraryService', () => {
       await expect(service.createLibrary(inputName, inputPath)).rejects.toThrow(
         PathNotUniqueException,
       );
+    });
+  });
+
+  describe('findAll', () => {
+    it('should return a paginated list of librarys', async () => {
+      const libraryEntity = new LibraryEntity();
+      libraryEntity.id = uuidv4();
+      libraryEntity.name = 'Test Library';
+      libraryEntity.path = '/path/to/library';
+      libraryEntity.createdAt = new Date();
+      libraryEntity.updatedAt = new Date();
+
+      jest
+        .spyOn(repository, 'findAndCount')
+        .mockResolvedValue([[libraryEntity], 1]);
+
+      const result = await service.findAll();
+
+      expect(result).toEqual({
+        results: [
+          {
+            id: libraryEntity.id,
+            name: libraryEntity.name,
+            path: libraryEntity.path,
+            createdAt: libraryEntity.createdAt,
+            updatedAt: libraryEntity.updatedAt,
+          },
+        ],
+        page: {
+          number: 0,
+          size: 10,
+          totalElements: 1,
+          totalPages: 1,
+        },
+      });
+    });
+
+    it('should call repository.findAndCount with correct parameters', async () => {
+      const spy = jest
+        .spyOn(repository, 'findAndCount')
+        .mockResolvedValue([[], 0]);
+      await service.findAll(
+        1,
+        5,
+        LibrarySortOrder.NAME,
+        LibrarySortDirection.ASC,
+        'test',
+      );
+
+      expect(spy).toHaveBeenCalledWith({
+        where: { name: Like('%test%') },
+        order: { name: 'ASC' },
+        take: 5,
+        skip: 5,
+      });
+
+      spy.mockClear();
     });
   });
 });

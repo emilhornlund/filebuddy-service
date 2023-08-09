@@ -1,6 +1,3 @@
-import { Type } from '@nestjs/common';
-import { ApiProperty } from '@nestjs/swagger';
-
 import { PaginationDto } from './pagination.dto';
 
 /**
@@ -15,26 +12,30 @@ export interface IPageDto<T> {
 }
 
 /**
- * Function to create a new PageDto with a given type.
- * @param classRef - The class reference to use as the type for the PageDto.
- * @returns A new PageDto with the provided type.
+ * Transforms an array of items of type `T` into a paginated data transfer object.
+ *
+ * @template T - The type of the individual items within the results array.
+ *
+ * @param results - An array of items for the current page of type `T`.
+ * @param page - The current page number, starting from 1.
+ * @param size - The number of items per page.
+ * @param totalElements - The total number of items across all pages.
+ *
+ * @returns An `IPageDto` object containing the provided results and pagination details.
  */
-export function PageDto<T>(classRef: Type<T>): new () => IPageDto<T> {
-  class PageDtoInternal {
-    @ApiProperty({
-      type: [classRef],
-      description: 'Array of results',
-      required: true,
-    })
-    results: T[];
-
-    @ApiProperty({
-      type: PaginationDto,
-      description: 'Pagination data',
-      required: true,
-    })
-    page: PaginationDto;
-  }
-
-  return PageDtoInternal as new () => IPageDto<T>;
+export function toPageDto<T>(
+  results: T[],
+  page: number,
+  size: number,
+  totalElements: number,
+): IPageDto<T> {
+  return {
+    results,
+    page: {
+      number: page,
+      size,
+      totalElements,
+      totalPages: Math.ceil(totalElements / size),
+    },
+  };
 }

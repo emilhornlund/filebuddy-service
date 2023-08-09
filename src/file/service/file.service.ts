@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 
+import { toPageDto } from '../../app';
 import { FileNotFoundException } from '../exception';
 import {
   FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION,
@@ -63,15 +64,12 @@ export class FileService {
       skip,
     });
 
-    return {
-      results: results.map(FileService.toFileDto),
-      page: {
-        number: page,
-        size,
-        totalElements,
-        totalPages: Math.ceil(totalElements / size),
-      },
-    };
+    return toPageDto(
+      results.map(FileService.toFileDto),
+      page,
+      size,
+      totalElements,
+    );
   }
 
   /**

@@ -13,6 +13,9 @@ export class FileDto {
   @ApiProperty({ description: 'Name of the file', required: true })
   name: string;
 
+  @ApiProperty({ description: 'Type of the file', required: true })
+  type: string;
+
   @ApiProperty({ description: 'Size of the file', required: true })
   size: number;
 

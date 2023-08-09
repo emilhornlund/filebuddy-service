@@ -21,6 +21,9 @@ export class FileEntity {
   path: string;
 
   @Column()
+  type: string;
+
+  @Column()
   size: number;
 
   @CreateDateColumn()

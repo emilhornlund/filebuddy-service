@@ -96,10 +96,11 @@ export class FileService {
    * @returns - The converted FileDto object.
    */
   private static toFileDto(fileEntity: FileEntity): FileDto {
-    const { id, name, size, createdAt, updatedAt } = fileEntity;
+    const { id, name, type, size, createdAt, updatedAt } = fileEntity;
     return {
       id,
       name,
+      type,
       size,
       createdAt,
       updatedAt,

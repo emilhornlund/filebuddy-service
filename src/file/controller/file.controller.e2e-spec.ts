@@ -39,6 +39,7 @@ describe('FileController (e2e)', () => {
       const fileEntity = fileRepository.create();
       fileEntity.name = `${fileName} #${paddedFileNumber}`;
       fileEntity.path = `${fileName}_#${paddedFileNumber}.${fileExtension}`;
+      fileEntity.type = i % 2 == 0 ? 'image/jpeg' : 'text/plain';
       fileEntity.size = i + 1;
 
       const date = new Date();
@@ -96,9 +97,10 @@ describe('FileController (e2e)', () => {
             'results',
             fileEntities
               .slice(0, 10)
-              .map(({ id, name, size, createdAt, updatedAt }) => ({
+              .map(({ id, name, type, size, createdAt, updatedAt }) => ({
                 id,
                 name,
+                type,
                 size,
                 created_at: createdAt.toISOString(),
                 updated_at: updatedAt.toISOString(),
@@ -316,9 +318,10 @@ describe('FileController (e2e)', () => {
             fileEntities
               .filter(({ name }) => name.includes('Image'))
               .slice(0, 10)
-              .map(({ id, name, size, createdAt, updatedAt }) => ({
+              .map(({ id, name, type, size, createdAt, updatedAt }) => ({
                 id,
                 name,
+                type,
                 size,
                 created_at: createdAt.toISOString(),
                 updated_at: updatedAt.toISOString(),
@@ -345,9 +348,10 @@ describe('FileController (e2e)', () => {
             fileEntities
               .reverse()
               .slice(0, 10)
-              .map(({ id, name, size, createdAt, updatedAt }) => ({
+              .map(({ id, name, type, size, createdAt, updatedAt }) => ({
                 id,
                 name,
+                type,
                 size,
                 created_at: createdAt.toISOString(),
                 updated_at: updatedAt.toISOString(),
@@ -373,9 +377,10 @@ describe('FileController (e2e)', () => {
             'results',
             fileEntities
               .slice(0, 10)
-              .map(({ id, name, size, createdAt, updatedAt }) => ({
+              .map(({ id, name, type, size, createdAt, updatedAt }) => ({
                 id,
                 name,
+                type,
                 size,
                 created_at: createdAt.toISOString(),
                 updated_at: updatedAt.toISOString(),
@@ -401,9 +406,10 @@ describe('FileController (e2e)', () => {
             'results',
             fileEntities
               .slice(0, 10)
-              .map(({ id, name, size, createdAt, updatedAt }) => ({
+              .map(({ id, name, type, size, createdAt, updatedAt }) => ({
                 id,
                 name,
+                type,
                 size,
                 created_at: createdAt.toISOString(),
                 updated_at: updatedAt.toISOString(),
@@ -477,6 +483,7 @@ describe('FileController (e2e)', () => {
           expect(response.body).toEqual({
             id: firstFileEntity.id,
             name: firstFileEntity.name,
+            type: firstFileEntity.type,
             size: firstFileEntity.size,
             created_at: firstFileEntity.createdAt.toISOString(),
             updated_at: firstFileEntity.updatedAt.toISOString(),

@@ -3,7 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
-import { PathNotUniqueException } from '../exception';
+import { LibraryNotFoundException, PathNotUniqueException } from '../exception';
 import {
   LibraryEntity,
   LibrarySortDirection,
@@ -125,6 +125,37 @@ describe('LibraryService', () => {
       });
 
       spy.mockClear();
+    });
+  });
+
+  describe('findById', () => {
+    it('should return a library by id', async () => {
+      const libraryEntity = new LibraryEntity();
+      libraryEntity.id = uuidv4();
+      libraryEntity.name = 'Test Library';
+      libraryEntity.path = '/path/to/library';
+      libraryEntity.createdAt = new Date();
+      libraryEntity.updatedAt = new Date();
+
+      jest.spyOn(repository, 'findOne').mockResolvedValue(libraryEntity);
+
+      const result = await service.findById(libraryEntity.id);
+
+      expect(result).toEqual({
+        id: libraryEntity.id,
+        name: libraryEntity.name,
+        path: libraryEntity.path,
+        createdAt: libraryEntity.createdAt,
+        updatedAt: libraryEntity.updatedAt,
+      });
+    });
+
+    it('should throw an error if library not found', async () => {
+      jest.spyOn(repository, 'findOne').mockResolvedValue(null);
+
+      await expect(service.findById(uuidv4())).rejects.toThrow(
+        LibraryNotFoundException,
+      );
     });
   });
 });

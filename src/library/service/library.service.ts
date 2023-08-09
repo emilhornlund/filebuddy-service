@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 
 import { toPageDto } from '../../app';
-import { PathNotUniqueException } from '../exception';
+import { LibraryNotFoundException, PathNotUniqueException } from '../exception';
 import {
   LIBRARY_QUERY_DEFAULT_PAGE,
   LIBRARY_QUERY_DEFAULT_PAGE_SIZE,
@@ -97,6 +97,22 @@ export class LibraryService {
       size,
       totalElements,
     );
+  }
+
+  /**
+   * Fetches a specific library by ID from the data store.
+   * @param libraryId - The ID of the library to fetch.
+   * @returns - A promise that will resolve to a `LibraryDto` containing the library data.
+   * @throws LibraryNotFoundException when a library with the given ID is not found.
+   */
+  public async findById(libraryId: string): Promise<LibraryDto> {
+    const entity = await this.librariesRepository.findOne({
+      where: { id: libraryId },
+    });
+    if (!entity) {
+      throw new LibraryNotFoundException(libraryId);
+    }
+    return LibraryService.toLibraryDto(entity);
   }
 
   /**

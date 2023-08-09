@@ -223,4 +223,30 @@ describe('LibraryService', () => {
       ).rejects.toThrow(PathNotUniqueException);
     });
   });
+
+  describe('deleteById', () => {
+    it('should delete a library by id', async () => {
+      const libraryEntity = new LibraryEntity();
+      libraryEntity.id = uuidv4();
+      libraryEntity.name = 'Test Library';
+      libraryEntity.path = '/path/to/library';
+      libraryEntity.createdAt = new Date();
+      libraryEntity.updatedAt = new Date();
+
+      jest.spyOn(repository, 'findOne').mockResolvedValue(libraryEntity);
+      jest.spyOn(repository, 'remove').mockResolvedValue(libraryEntity);
+
+      const result = await service.deleteById(libraryEntity.id);
+
+      expect(result).toBe(void 0);
+    });
+
+    it('should throw an error if library not found', async () => {
+      jest.spyOn(repository, 'findOne').mockResolvedValue(null);
+
+      await expect(service.deleteById(uuidv4())).rejects.toThrow(
+        LibraryNotFoundException,
+      );
+    });
+  });
 });

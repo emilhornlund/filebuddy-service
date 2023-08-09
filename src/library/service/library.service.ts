@@ -162,6 +162,30 @@ export class LibraryService {
   }
 
   /**
+   * Deletes the library by its unique identifier.
+   *
+   * This method retrieves the `Library` entity based on the provided `libraryId` and then removes it from the database.
+   * If the library with the provided ID is not found, it throws a `LibraryNotFoundException`.
+   *
+   * @param libraryId - The unique identifier of the library to be deleted.
+   *
+   * @throws {LibraryNotFoundException} - If a library with the provided ID is not found.
+   *
+   * @returns A promise that resolves when the deletion is complete. The promise does not carry any value.
+   */
+  public async deleteById(libraryId: string): Promise<void> {
+    const libraryEntity = await this.librariesRepository.findOne({
+      where: { id: libraryId },
+    });
+
+    if (!libraryEntity) {
+      throw new LibraryNotFoundException(libraryId);
+    }
+
+    await this.librariesRepository.remove(libraryEntity);
+  }
+
+  /**
    * Converts a LibraryEntity object into a LibraryDto object.
    * @param libraryEntity - The LibraryEntity object to convert.
    * @returns - The converted LibraryDto object.

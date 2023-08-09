@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { Like, Not, Repository } from 'typeorm';
 
 import { toPageDto } from '../../app';
 import { LibraryNotFoundException, PathNotUniqueException } from '../exception';
@@ -113,6 +113,52 @@ export class LibraryService {
       throw new LibraryNotFoundException(libraryId);
     }
     return LibraryService.toLibraryDto(entity);
+  }
+
+  /**
+   * Updates the library details by its ID.
+   *
+   * @param libraryId - The unique identifier of the library to be updated.
+   * @param name - (Optional) The new name for the library. If provided and different from the current, it will update the name.
+   * @param path - (Optional) The new path for the library. If provided and different from the current, it will update the path. If a library with the same path already exists (excluding the one being updated), a `PathNotUniqueException` will be thrown.
+   *
+   * @returns A promise that resolves with the updated `LibraryDto`.
+   *
+   * @throws {LibraryNotFoundException} - If a library with the provided ID is not found.
+   * @throws {PathNotUniqueException} - If a library with the same path (excluding the one being updated) already exists.
+   */
+  public async updateById(
+    libraryId: string,
+    name?: string,
+    path?: string,
+  ): Promise<LibraryDto> {
+    const libraryEntity = await this.librariesRepository.findOne({
+      where: { id: libraryId },
+    });
+
+    if (!libraryEntity) {
+      throw new LibraryNotFoundException(libraryId);
+    }
+
+    if (name && libraryEntity.name !== name) {
+      libraryEntity.name = name;
+    }
+
+    if (path && libraryEntity.path !== path) {
+      const libraryExists = await this.librariesRepository.exist({
+        where: { id: Not(libraryId), path },
+      });
+
+      if (libraryExists) {
+        throw new PathNotUniqueException(path);
+      }
+
+      libraryEntity.path = path;
+    }
+
+    return await this.librariesRepository
+      .save(libraryEntity)
+      .then(LibraryService.toLibraryDto);
   }
 
   /**

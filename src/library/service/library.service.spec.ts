@@ -158,4 +158,69 @@ describe('LibraryService', () => {
       );
     });
   });
+
+  describe('updateById', () => {
+    it('should update a library by id', async () => {
+      const mockOldLibraryEntity = new LibraryEntity();
+      mockOldLibraryEntity.id = uuidv4();
+      mockOldLibraryEntity.name = 'Test Library';
+      mockOldLibraryEntity.path = '/path/to/library';
+      mockOldLibraryEntity.createdAt = new Date();
+      mockOldLibraryEntity.updatedAt = new Date();
+
+      const mockNewLibraryEntity = mockOldLibraryEntity;
+      mockOldLibraryEntity.name = 'New Test Library';
+      mockOldLibraryEntity.path = '/new/path/to/library';
+
+      jest.spyOn(repository, 'findOne').mockResolvedValue(mockOldLibraryEntity);
+      jest.spyOn(repository, 'exist').mockResolvedValue(false);
+      jest.spyOn(repository, 'save').mockResolvedValue(mockNewLibraryEntity);
+
+      const result = await service.updateById(
+        mockOldLibraryEntity.id,
+        mockNewLibraryEntity.name,
+        mockNewLibraryEntity.path,
+      );
+
+      expect(result).toEqual({
+        id: mockOldLibraryEntity.id,
+        name: mockNewLibraryEntity.name,
+        path: mockNewLibraryEntity.path,
+        createdAt: mockOldLibraryEntity.createdAt,
+        updatedAt: mockOldLibraryEntity.updatedAt,
+      });
+    });
+
+    it('should throw an error if library not found', async () => {
+      jest.spyOn(repository, 'findOne').mockResolvedValue(null);
+
+      await expect(
+        service.updateById(
+          uuidv4(),
+          'New Test Library',
+          '/new/path/to/library',
+        ),
+      ).rejects.toThrow(LibraryNotFoundException);
+    });
+
+    it('should throw PathNotUniqueException if library with same path exists', async () => {
+      const mockOldLibraryEntity = new LibraryEntity();
+      mockOldLibraryEntity.id = uuidv4();
+      mockOldLibraryEntity.name = 'Test Library';
+      mockOldLibraryEntity.path = '/path/to/library';
+      mockOldLibraryEntity.createdAt = new Date();
+      mockOldLibraryEntity.updatedAt = new Date();
+
+      jest.spyOn(repository, 'findOne').mockResolvedValue(mockOldLibraryEntity);
+      jest.spyOn(repository, 'exist').mockResolvedValue(true);
+
+      await expect(
+        service.updateById(
+          mockOldLibraryEntity.id,
+          'New Test Library',
+          '/new/path/to/library',
+        ),
+      ).rejects.toThrow(PathNotUniqueException);
+    });
+  });
 });

@@ -12,7 +12,7 @@ import { FileEntity } from '../../file';
 /**
  * Entity representation of a library in the database.
  */
-@Entity()
+@Entity({ name: 'libraries' })
 export class LibraryEntity {
   /**
    * Unique identifier for the library, generated as a UUID.

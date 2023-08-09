@@ -40,7 +40,7 @@ export class LibraryService {
    * @returns - A promise that resolves with the created LibraryDto.
    * @throws {PathNotUniqueException} - If a library with the same path already exists.
    */
-  public async createLibrary(name: string, path: string): Promise<LibraryDto> {
+  public async create(name: string, path: string): Promise<LibraryDto> {
     const libraryExists = await this.librariesRepository.exist({
       where: { path },
     });

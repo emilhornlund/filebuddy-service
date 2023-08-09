@@ -37,7 +37,7 @@ describe('LibraryService', () => {
     expect(repository).toBeDefined();
   });
 
-  describe('createLibrary', () => {
+  describe('create', () => {
     it('should create a library successfully', async () => {
       const inputName = 'Test Library';
       const inputPath = '/path/to/library';
@@ -53,7 +53,7 @@ describe('LibraryService', () => {
       jest.spyOn(repository, 'create').mockReturnValue(mockLibraryEntity);
       jest.spyOn(repository, 'save').mockResolvedValue(mockLibraryEntity);
 
-      const result = await service.createLibrary(inputName, inputPath);
+      const result = await service.create(inputName, inputPath);
 
       expect(result.name).toBe(inputName);
       expect(result.path).toBe(inputPath);
@@ -65,7 +65,7 @@ describe('LibraryService', () => {
 
       jest.spyOn(repository, 'exist').mockResolvedValue(true);
 
-      await expect(service.createLibrary(inputName, inputPath)).rejects.toThrow(
+      await expect(service.create(inputName, inputPath)).rejects.toThrow(
         PathNotUniqueException,
       );
     });

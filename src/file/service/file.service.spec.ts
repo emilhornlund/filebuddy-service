@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
+import { LibraryEntity, LibraryService } from '../../library';
 import { FileNotFoundException } from '../exception';
 import { FileEntity, FileSortDirection, FileSortOrder } from '../model';
 import { FileService } from './file.service';
@@ -17,6 +18,11 @@ describe('FileService', () => {
         FileService,
         {
           provide: getRepositoryToken(FileEntity),
+          useClass: Repository,
+        },
+        LibraryService,
+        {
+          provide: getRepositoryToken(LibraryEntity),
           useClass: Repository,
         },
       ],

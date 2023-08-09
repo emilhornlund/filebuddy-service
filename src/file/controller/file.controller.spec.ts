@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
 
+import { LibraryService } from '../../library';
 import {
   FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION,
   FILE_QUERY_DEFAULT_FILE_SORT_ORDER,
@@ -32,6 +33,10 @@ describe('FileController', () => {
         {
           provide: FileService,
           useValue: mockFileService,
+        },
+        {
+          provide: LibraryService,
+          useValue: {},
         },
       ],
     }).compile();

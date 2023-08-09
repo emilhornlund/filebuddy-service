@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
+import { FileEntity, FileService } from '../../file';
 import { LibraryNotFoundException, PathNotUniqueException } from '../exception';
 import {
   LibraryEntity,
@@ -21,6 +22,11 @@ describe('LibraryService', () => {
         LibraryService,
         {
           provide: getRepositoryToken(LibraryEntity),
+          useClass: Repository,
+        },
+        FileService,
+        {
+          provide: getRepositoryToken(FileEntity),
           useClass: Repository,
         },
       ],
@@ -47,6 +53,7 @@ describe('LibraryService', () => {
         path: inputPath,
         createdAt: new Date(),
         updatedAt: new Date(),
+        files: [],
       };
 
       jest.spyOn(repository, 'exist').mockResolvedValue(false);
@@ -79,6 +86,7 @@ describe('LibraryService', () => {
       libraryEntity.path = '/path/to/library';
       libraryEntity.createdAt = new Date();
       libraryEntity.updatedAt = new Date();
+      libraryEntity.files = [];
 
       jest
         .spyOn(repository, 'findAndCount')
@@ -136,6 +144,7 @@ describe('LibraryService', () => {
       libraryEntity.path = '/path/to/library';
       libraryEntity.createdAt = new Date();
       libraryEntity.updatedAt = new Date();
+      libraryEntity.files = [];
 
       jest.spyOn(repository, 'findOne').mockResolvedValue(libraryEntity);
 
@@ -167,6 +176,7 @@ describe('LibraryService', () => {
       mockOldLibraryEntity.path = '/path/to/library';
       mockOldLibraryEntity.createdAt = new Date();
       mockOldLibraryEntity.updatedAt = new Date();
+      mockOldLibraryEntity.files = [];
 
       const mockNewLibraryEntity = mockOldLibraryEntity;
       mockOldLibraryEntity.name = 'New Test Library';
@@ -210,6 +220,7 @@ describe('LibraryService', () => {
       mockOldLibraryEntity.path = '/path/to/library';
       mockOldLibraryEntity.createdAt = new Date();
       mockOldLibraryEntity.updatedAt = new Date();
+      mockOldLibraryEntity.files = [];
 
       jest.spyOn(repository, 'findOne').mockResolvedValue(mockOldLibraryEntity);
       jest.spyOn(repository, 'exist').mockResolvedValue(true);
@@ -232,6 +243,7 @@ describe('LibraryService', () => {
       libraryEntity.path = '/path/to/library';
       libraryEntity.createdAt = new Date();
       libraryEntity.updatedAt = new Date();
+      libraryEntity.files = [];
 
       jest.spyOn(repository, 'findOne').mockResolvedValue(libraryEntity);
       jest.spyOn(repository, 'remove').mockResolvedValue(libraryEntity);

@@ -32,6 +32,7 @@ export class LibraryDto {
    * The date and time when the library was created.
    */
   @ApiProperty({
+    name: 'created_at',
     description: 'The date and time the library was created',
     type: Date,
     required: true,
@@ -42,6 +43,7 @@ export class LibraryDto {
    * The date and time when the library was last updated.
    */
   @ApiProperty({
+    name: 'updated_at',
     description: 'The date and time the library was last updated',
     type: Date,
     required: true,

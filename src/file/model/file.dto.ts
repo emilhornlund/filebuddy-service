@@ -20,6 +20,7 @@ export class FileDto {
   size: number;
 
   @ApiProperty({
+    name: 'created_at',
     description: 'The date and time the file was created',
     type: Date,
     required: true,
@@ -27,6 +28,7 @@ export class FileDto {
   createdAt: Date;
 
   @ApiProperty({
+    name: 'updated_at',
     description: 'The date and time the file was last updated',
     type: Date,
     required: true,

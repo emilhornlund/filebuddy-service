@@ -1,19 +1,19 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IPageDto, PaginationDto } from '../../app';
-import { FileDto } from './file.dto';
+import { IPageDto, PaginationDto } from '../../../app';
+import { FileResponse } from './file.response';
 
 /**
- * A DTO for pages that contain FileDto results.
+ * Response object representing a page of files.
  */
-export class FilePageDto implements IPageDto<FileDto> {
+export class PagedFileResponse implements IPageDto<FileResponse> {
   /** Array of results for the current page. */
   @ApiProperty({
-    type: [FileDto],
+    type: [FileResponse],
     description: 'Array of results',
     required: true,
   })
-  results: FileDto[];
+  results: FileResponse[];
 
   /** Pagination details for the current page. */
   @ApiProperty({

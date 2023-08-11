@@ -2,18 +2,17 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
 
 import { LibraryService } from '../../library';
+import { FileIdParam } from '../model/param';
 import {
   FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION,
   FILE_QUERY_DEFAULT_FILE_SORT_ORDER,
   FILE_QUERY_DEFAULT_PAGE,
   FILE_QUERY_DEFAULT_PAGE_SIZE,
-  FileDto,
-  FileIdParam,
-  FilePageDto,
-  FileQueryDto,
+  FileQuery,
   FileSortDirection,
   FileSortOrder,
-} from '../model';
+} from '../model/query';
+import { FileResponse, PagedFileResponse } from '../model/response';
 import { FileService } from '../service';
 import { FileController } from './file.controller';
 
@@ -51,13 +50,13 @@ describe('FileController', () => {
   });
 
   describe('findAll', () => {
-    it('should return a FilePageDto with default parameters', async () => {
-      const result = new FilePageDto();
+    it('should return a PagedFileResponse with default parameters', async () => {
+      const result = new PagedFileResponse();
       jest
         .spyOn(fileService, 'findAll')
         .mockImplementation(() => of(result).toPromise());
 
-      expect(await fileController.findAll(new FileQueryDto())).toEqual(result);
+      expect(await fileController.findAll(new FileQuery())).toEqual(result);
       expect(fileService.findAll).toHaveBeenCalledWith(
         FILE_QUERY_DEFAULT_PAGE,
         FILE_QUERY_DEFAULT_PAGE_SIZE,
@@ -67,13 +66,13 @@ describe('FileController', () => {
       );
     });
 
-    it('should return a FilePageDto with custom parameters', async () => {
-      const result = new FilePageDto();
+    it('should return a PagedFileResponse with custom parameters', async () => {
+      const result = new PagedFileResponse();
       jest
         .spyOn(fileService, 'findAll')
         .mockImplementation(() => of(result).toPromise());
 
-      const customQuery = new FileQueryDto();
+      const customQuery = new FileQuery();
       customQuery.page = 2;
       customQuery.size = 10;
       customQuery.order = FileSortOrder.NAME;
@@ -94,15 +93,15 @@ describe('FileController', () => {
         throw new Error('Test Error');
       });
 
-      await expect(fileController.findAll(new FileQueryDto())).rejects.toThrow(
+      await expect(fileController.findAll(new FileQuery())).rejects.toThrow(
         'Test Error',
       );
     });
   });
 
   describe('findById', () => {
-    it('should return a FileDto', async () => {
-      const result = new FileDto();
+    it('should return a FileResponse', async () => {
+      const result = new FileResponse();
       const fileIdParam = new FileIdParam();
       fileIdParam.fileId = '1234';
 

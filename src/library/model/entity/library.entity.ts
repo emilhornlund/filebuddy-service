@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-import { FileEntity } from '../../../file';
+import { FileEntity } from '../../../file/model/entity';
 
 /**
  * Entity representation of a library in the database.

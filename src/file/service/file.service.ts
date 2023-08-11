@@ -4,17 +4,16 @@ import { Like, Repository } from 'typeorm';
 
 import { toPageDto } from '../../app';
 import { FileNotFoundException } from '../exception';
+import { FileEntity } from '../model/entity';
 import {
   FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION,
   FILE_QUERY_DEFAULT_FILE_SORT_ORDER,
   FILE_QUERY_DEFAULT_PAGE,
   FILE_QUERY_DEFAULT_PAGE_SIZE,
-  FileDto,
-  FileEntity,
-  FilePageDto,
   FileSortDirection,
   FileSortOrder,
-} from '../model';
+} from '../model/query';
+import { FileResponse, PagedFileResponse } from '../model/response';
 
 /**
  * A service that handles file-related operations.
@@ -38,7 +37,7 @@ export class FileService {
    * @param order - The field by which to order the results. Defaults to 'createdAt'.
    * @param direction - The order type (ASC or DESC). Defaults to 'DESC'.
    * @param nameFilter - Optional name filter to apply to the file names.
-   * @returns - A promise that will resolve to a `FilePageDto` containing the fetched files and page information.
+   * @returns - A promise that will resolve to a `PagedFileResponse` containing the fetched files and page information.
    */
   public async findAll(
     page: number = FILE_QUERY_DEFAULT_PAGE,
@@ -46,7 +45,7 @@ export class FileService {
     order: FileSortOrder = FILE_QUERY_DEFAULT_FILE_SORT_ORDER,
     direction: FileSortDirection = FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION,
     nameFilter?: string,
-  ): Promise<FilePageDto> {
+  ): Promise<PagedFileResponse> {
     const skip = page * size;
 
     const orderParams = {};
@@ -65,7 +64,7 @@ export class FileService {
     });
 
     return toPageDto(
-      results.map(FileService.toFileDto),
+      results.map(FileService.toFileResponse),
       page,
       size,
       totalElements,
@@ -75,25 +74,25 @@ export class FileService {
   /**
    * Fetches a specific file by ID from the data store.
    * @param fileId - The ID of the file to fetch.
-   * @returns - A promise that will resolve to a `FileDto` containing the file data.
+   * @returns - A promise that will resolve to a `FileResponse` containing the file data.
    * @throws FileNotFoundException when a file with the given ID is not found.
    */
-  public async findById(fileId: string): Promise<FileDto> {
+  public async findById(fileId: string): Promise<FileResponse> {
     const entity = await this.filesRepository.findOne({
       where: { id: fileId },
     });
     if (!entity) {
       throw new FileNotFoundException(fileId);
     }
-    return FileService.toFileDto(entity);
+    return FileService.toFileResponse(entity);
   }
 
   /**
-   * Converts a FileEntity object into a FileDto object.
+   * Converts a FileEntity object into a FileResponse object.
    * @param fileEntity - The FileEntity object to convert.
-   * @returns - The converted FileDto object.
+   * @returns - The converted FileResponse object.
    */
-  private static toFileDto(fileEntity: FileEntity): FileDto {
+  private static toFileResponse(fileEntity: FileEntity): FileResponse {
     const { id, name, type, size, createdAt, updatedAt } = fileEntity;
     return {
       id,

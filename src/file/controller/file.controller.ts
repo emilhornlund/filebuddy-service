@@ -14,7 +14,9 @@ import {
 } from '@nestjs/swagger';
 
 import { Authorities, AuthoritiesDto } from '../../auth';
-import { FileDto, FileIdParam, FilePageDto, FileQueryDto } from '../model';
+import { FileIdParam } from '../model/param';
+import { FileQuery } from '../model/query';
+import { FileResponse, PagedFileResponse } from '../model/response';
 import { FileService } from '../service';
 
 /**
@@ -39,37 +41,43 @@ export class FileController {
 
   /**
    * Returns a paginated list of files based on the provided query parameters.
-   * @param fileQueryDto - Query parameters including page, size, sort order, sort direction, and name filter
-   * @returns A Promise that resolves to a FilePageDto object representing a page of files
+   * @param fileQuery - Query parameters including page, size, sort order, sort direction, and name filter
+   * @returns A Promise that resolves to a PagedFileResponse object representing a page of files
    */
   @ApiOperation({ summary: '', description: '' })
-  @ApiResponse({ status: HttpStatus.OK, description: '', type: FilePageDto })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: '',
+    type: PagedFileResponse,
+  })
   @Authorities(AuthoritiesDto.FILE_MANAGEMENT)
   @HttpCode(HttpStatus.OK)
   @Get()
   public async findAll(
-    @Query() fileQueryDto: FileQueryDto,
-  ): Promise<FilePageDto> {
+    @Query() fileQuery: FileQuery,
+  ): Promise<PagedFileResponse> {
     return this.fileService.findAll(
-      fileQueryDto.page,
-      fileQueryDto.size,
-      fileQueryDto.order,
-      fileQueryDto.direction,
-      fileQueryDto.name,
+      fileQuery.page,
+      fileQuery.size,
+      fileQuery.order,
+      fileQuery.direction,
+      fileQuery.name,
     );
   }
 
   /**
    * Returns the file with the specified ID.
    * @param fileIdParam - An object containing the ID of the file to retrieve
-   * @returns A Promise that resolves to a FileDto object representing the retrieved file
+   * @returns A Promise that resolves to a FileResponse object representing the retrieved file
    */
   @ApiOperation({ summary: '', description: '' })
-  @ApiResponse({ status: HttpStatus.OK, description: '', type: FileDto })
+  @ApiResponse({ status: HttpStatus.OK, description: '', type: FileResponse })
   @Authorities(AuthoritiesDto.FILE_MANAGEMENT)
   @HttpCode(HttpStatus.OK)
   @Get(':fileId')
-  public async findById(@Param() fileIdParam: FileIdParam): Promise<FileDto> {
+  public async findById(
+    @Param() fileIdParam: FileIdParam,
+  ): Promise<FileResponse> {
     return this.fileService.findById(fileIdParam.fileId);
   }
 }

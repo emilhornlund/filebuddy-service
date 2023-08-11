@@ -8,12 +8,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { AppModule } from '../../app';
 import { AuthoritiesDto } from '../../auth';
+import { FileEntity } from '../model/entity';
 import {
   FILE_QUERY_MAXIMUM_PAGE_SIZE,
   FILE_QUERY_MINIMUM_PAGE_NUMBER,
   FILE_QUERY_MINIMUM_PAGE_SIZE,
-  FileEntity,
-} from '../model';
+} from '../model/query';
 
 describe('FileController (e2e)', () => {
   let app: INestApplication;

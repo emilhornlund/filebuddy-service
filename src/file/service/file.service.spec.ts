@@ -6,7 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { LibraryService } from '../../library';
 import { LibraryEntity } from '../../library/model/entity';
 import { FileNotFoundException } from '../exception';
-import { FileEntity, FileSortDirection, FileSortOrder } from '../model';
+import { FileEntity } from '../model/entity';
+import { FileSortDirection, FileSortOrder } from '../model/query';
 import { FileService } from './file.service';
 
 describe('FileService', () => {

@@ -40,7 +40,7 @@ export const FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION: FileSortDirection =
   FileSortDirection.DESC;
 
 /** Class representing a file query, which includes pagination and sorting options */
-export class FileQueryDto {
+export class FileQuery {
   /**
    * Represents the page number to fetch. It defaults to FILE_QUERY_DEFAULT_PAGE if not specified.
    */

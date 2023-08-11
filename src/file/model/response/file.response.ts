@@ -1,9 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 /**
- * A DTO for files, including properties for identification, name, size, and timestamps.
+ * Response object representing a file.
  */
-export class FileDto {
+export class FileResponse {
   @ApiProperty({
     description: 'Unique identifier for the file',
     required: true,

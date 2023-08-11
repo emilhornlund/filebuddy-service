@@ -4,7 +4,7 @@ import {
   ApiLibraryNameProperty,
   ApiLibraryPathProperty,
   ApiLibraryUpdatedAtProperty,
-} from '../../decorator';
+} from '../../decorator/api/property';
 
 /**
  * Response object representing a library.

@@ -1,10 +1,8 @@
 import {
   ApiLibraryNameProperty,
   ApiLibraryPathProperty,
-  IsDirectoryPath,
-  IsName,
-} from '../../decorator';
-
+} from '../../decorator/api/property';
+import { IsDirectoryPath, IsName } from '../../decorator/validation';
 /**
  * Request object representing the payload required
  * to create a new library. It includes properties for the

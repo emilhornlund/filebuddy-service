@@ -1,14 +1,15 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { Authorities, AuthoritiesDto } from '../../auth';
+import { ApiLibraryCreateOperation } from '../decorator/api/operation';
 import {
-  ApiLibraryCreateOperation,
+  ApiLibraryCreatedResponse,
   ApiLibraryForbiddenResponse,
   ApiLibraryPathConflictResponse,
   ApiLibraryUnauthorizedResponse,
   ApiLibraryValidationFailedResponse,
-} from '../decorator';
+} from '../decorator/api/response';
 import { CreateLibraryRequest } from '../model/request';
 import { LibraryResponse } from '../model/response';
 import { LibraryService } from '../service';
@@ -41,11 +42,7 @@ export class LibraryController {
    * @returns A promise that resolves to the created `LibraryDto`.
    */
   @ApiLibraryCreateOperation()
-  @ApiResponse({
-    status: HttpStatus.CREATED,
-    description: 'The library was successfully created.',
-    type: () => LibraryResponse,
-  })
+  @ApiLibraryCreatedResponse()
   @ApiLibraryValidationFailedResponse()
   @ApiLibraryUnauthorizedResponse()
   @ApiLibraryForbiddenResponse()

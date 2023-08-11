@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { v4 as uuidv4 } from 'uuid';
 
 import { FileService } from '../../file';
-import { LibraryDto } from '../model';
+import { LibraryResponse } from '../model/response';
 import { LibraryService } from '../service';
 import { LibraryController } from './library.controller';
 
@@ -43,7 +43,7 @@ describe('LibraryController', () => {
       const inputName = 'Test Library';
       const inputPath = '/path/to/library';
 
-      const mockLibraryEntity: LibraryDto = {
+      const mockLibraryEntity: LibraryResponse = {
         id: uuidv4(),
         name: 'Test Library',
         path: '/path/to/library',

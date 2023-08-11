@@ -4,17 +4,16 @@ import { Like, Not, Repository } from 'typeorm';
 
 import { toPageDto } from '../../app';
 import { LibraryNotFoundException, PathNotUniqueException } from '../exception';
+import { LibraryEntity } from '../model/entity';
 import {
   LIBRARY_QUERY_DEFAULT_PAGE,
   LIBRARY_QUERY_DEFAULT_PAGE_SIZE,
   LIBRARY_QUERY_DEFAULT_SORT_DIRECTION,
   LIBRARY_QUERY_DEFAULT_SORT_ORDER,
-  LibraryDto,
-  LibraryEntity,
-  LibraryPageDto,
   LibrarySortDirection,
   LibrarySortOrder,
-} from '../model';
+} from '../model/query';
+import { LibraryResponse, PagedLibraryResponse } from '../model/response';
 
 /**
  * A service that handles library-related operations.
@@ -40,7 +39,7 @@ export class LibraryService {
    * @returns - A promise that resolves with the created LibraryDto.
    * @throws {PathNotUniqueException} - If a library with the same path already exists.
    */
-  public async create(name: string, path: string): Promise<LibraryDto> {
+  public async create(name: string, path: string): Promise<LibraryResponse> {
     const libraryExists = await this.librariesRepository.exist({
       where: { path },
     });
@@ -72,7 +71,7 @@ export class LibraryService {
     order: LibrarySortOrder = LIBRARY_QUERY_DEFAULT_SORT_ORDER,
     direction: LibrarySortDirection = LIBRARY_QUERY_DEFAULT_SORT_DIRECTION,
     nameFilter?: string,
-  ): Promise<LibraryPageDto> {
+  ): Promise<PagedLibraryResponse> {
     const skip = page * size;
 
     const orderParams = {};
@@ -105,7 +104,7 @@ export class LibraryService {
    * @returns - A promise that will resolve to a `LibraryDto` containing the library data.
    * @throws LibraryNotFoundException when a library with the given ID is not found.
    */
-  public async findById(libraryId: string): Promise<LibraryDto> {
+  public async findById(libraryId: string): Promise<LibraryResponse> {
     const entity = await this.librariesRepository.findOne({
       where: { id: libraryId },
     });
@@ -131,7 +130,7 @@ export class LibraryService {
     libraryId: string,
     name?: string,
     path?: string,
-  ): Promise<LibraryDto> {
+  ): Promise<LibraryResponse> {
     const libraryEntity = await this.librariesRepository.findOne({
       where: { id: libraryId },
     });
@@ -190,7 +189,7 @@ export class LibraryService {
    * @param libraryEntity - The LibraryEntity object to convert.
    * @returns - The converted LibraryDto object.
    */
-  private static toLibraryDto(libraryEntity: LibraryEntity): LibraryDto {
+  private static toLibraryDto(libraryEntity: LibraryEntity): LibraryResponse {
     const { id, name, path, createdAt, updatedAt } = libraryEntity;
     return {
       id,

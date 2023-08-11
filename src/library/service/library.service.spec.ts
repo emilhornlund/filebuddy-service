@@ -5,11 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { FileEntity, FileService } from '../../file';
 import { LibraryNotFoundException, PathNotUniqueException } from '../exception';
-import {
-  LibraryEntity,
-  LibrarySortDirection,
-  LibrarySortOrder,
-} from '../model';
+import { LibraryEntity } from '../model/entity';
+import { LibrarySortDirection, LibrarySortOrder } from '../model/query';
 import { LibraryService } from './library.service';
 
 describe('LibraryService', () => {

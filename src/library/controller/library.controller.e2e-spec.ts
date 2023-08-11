@@ -7,7 +7,8 @@ import { Repository } from 'typeorm';
 
 import { AppModule } from '../../app';
 import { AuthoritiesDto } from '../../auth';
-import { CreateLibraryDto, LibraryEntity } from '../model';
+import { LibraryEntity } from '../model/entity';
+import { CreateLibraryRequest } from '../model/request';
 
 describe('LibraryController (e2e)', () => {
   let app: INestApplication;
@@ -48,7 +49,7 @@ describe('LibraryController (e2e)', () => {
   });
 
   describe('/libraries (POST)', () => {
-    const mockPayload: CreateLibraryDto = {
+    const mockPayload: CreateLibraryRequest = {
       name: 'Test Library',
       path: '/path/to/library',
     };

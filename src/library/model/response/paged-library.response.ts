@@ -1,21 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IPageDto, PaginationDto } from '../../app';
-import { LibraryDto } from './library.dto';
+import { IPageDto, PaginationDto } from '../../../app';
+import { LibraryResponse } from './library.response';
 
 /**
- * Data Transfer Object representing a page of libraries.
+ * Response object representing a page of libraries.
  */
-export class LibraryPageDto implements IPageDto<LibraryDto> {
+export class PagedLibraryResponse implements IPageDto<LibraryResponse> {
   /*
    * Array of results for the current page.
    */
   @ApiProperty({
-    type: [LibraryDto],
+    type: [LibraryResponse],
     description: 'Array of results',
     required: true,
   })
-  results: LibraryDto[];
+  results: LibraryResponse[];
 
   /*
    * Pagination details for the current page.

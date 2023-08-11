@@ -9,7 +9,8 @@ import {
   ApiLibraryUnauthorizedResponse,
   ApiLibraryValidationFailedResponse,
 } from '../decorator';
-import { CreateLibraryDto, LibraryDto } from '../model';
+import { CreateLibraryRequest } from '../model/request';
+import { LibraryResponse } from '../model/response';
 import { LibraryService } from '../service';
 
 /**
@@ -43,7 +44,7 @@ export class LibraryController {
   @ApiResponse({
     status: HttpStatus.CREATED,
     description: 'The library was successfully created.',
-    type: () => LibraryDto,
+    type: () => LibraryResponse,
   })
   @ApiLibraryValidationFailedResponse()
   @ApiLibraryUnauthorizedResponse()
@@ -52,8 +53,8 @@ export class LibraryController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   public async create(
-    @Body() createLibraryDto: CreateLibraryDto,
-  ): Promise<LibraryDto> {
+    @Body() createLibraryDto: CreateLibraryRequest,
+  ): Promise<LibraryResponse> {
     return this.libraryService.create(
       createLibraryDto.name,
       createLibraryDto.path,

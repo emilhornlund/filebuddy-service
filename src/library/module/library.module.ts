@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { LibraryController } from '../controller';
-import { LibraryEntity } from '../model';
+import { LibraryEntity } from '../model/entity';
 import { LibraryService } from '../service';
 
 @Module({

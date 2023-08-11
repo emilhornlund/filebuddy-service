@@ -40,7 +40,7 @@ export const LIBRARY_QUERY_DEFAULT_SORT_DIRECTION: LibrarySortDirection =
   LibrarySortDirection.DESC;
 
 /** Class representing a library query, which includes pagination and sorting options */
-export class LibraryQueryDto {
+export class LibraryQuery {
   /**
    * Represents the page number to fetch. It defaults to LIBRARY_QUERY_DEFAULT_PAGE if not specified.
    */

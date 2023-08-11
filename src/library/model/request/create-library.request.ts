@@ -3,24 +3,24 @@ import {
   ApiLibraryPathProperty,
   IsDirectoryPath,
   IsName,
-} from '../decorator';
+} from '../../decorator';
 
 /**
- * Data Transfer Object (DTO) representing the payload required
+ * Request object representing the payload required
  * to create a new library. It includes properties for the
  * library's name and the path where the library resides.
  *
  * @remarks
- * This DTO is meant to be used for validating and transporting
- * data when creating a new library.
+ * This request object is meant to be used for validating
+ * and transporting data when creating a new library.
  *
  * @example
- * const newLibrary: CreateLibraryDto = {
+ * const newLibrary: CreateLibraryRequest = {
  *   name: 'MyLibrary',
  *   path: '/path/to/library'
  * };
  */
-export class CreateLibraryDto {
+export class CreateLibraryRequest {
   /**
    * Represents the name of the library.
    * - It should not be empty.

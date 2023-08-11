@@ -4,12 +4,12 @@ import {
   ApiLibraryNameProperty,
   ApiLibraryPathProperty,
   ApiLibraryUpdatedAtProperty,
-} from '../decorator';
+} from '../../decorator';
 
 /**
- * Data Transfer Object representing a library.
+ * Response object representing a library.
  */
-export class LibraryDto {
+export class LibraryResponse {
   /**
    * Unique identifier for the library.
    */

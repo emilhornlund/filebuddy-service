@@ -3,7 +3,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
-import { LibraryEntity, LibraryService } from '../../library';
+import { LibraryService } from '../../library';
+import { LibraryEntity } from '../../library/model/entity';
 import { FileNotFoundException } from '../exception';
 import { FileEntity, FileSortDirection, FileSortOrder } from '../model';
 import { FileService } from './file.service';

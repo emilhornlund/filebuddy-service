@@ -1,6 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
-
-import { IsDirectoryPath, IsName } from '../decorator';
+import {
+  ApiLibraryNameProperty,
+  ApiLibraryPathProperty,
+  IsDirectoryPath,
+  IsName,
+} from '../decorator';
 
 /**
  * Data Transfer Object (DTO) representing the payload required
@@ -24,10 +27,7 @@ export class CreateLibraryDto {
    * - It must contain between 2 and 20 characters.
    * - It can only contain alphanumeric characters, hyphens, underscores, spaces, and dots.
    */
-  @ApiProperty({
-    description: 'Name of the library',
-    required: true,
-  })
+  @ApiLibraryNameProperty()
   @IsName()
   name: string;
 
@@ -39,10 +39,7 @@ export class CreateLibraryDto {
    * - Each segment of the path should be separated by a '/'.
    * - The path should not end with a filename and extension.
    */
-  @ApiProperty({
-    description: 'Path where the library resides',
-    required: true,
-  })
+  @ApiLibraryPathProperty()
   @IsDirectoryPath()
   path: string;
 }

@@ -4,3 +4,4 @@ export * from './exception';
 export * from './model';
 export * from './module';
 export * from './service';
+export * from './utility';

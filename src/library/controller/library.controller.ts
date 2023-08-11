@@ -1,12 +1,14 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { Authorities, AuthoritiesDto } from '../../auth';
+import {
+  ApiLibraryCreateOperation,
+  ApiLibraryForbiddenResponse,
+  ApiLibraryPathConflictResponse,
+  ApiLibraryUnauthorizedResponse,
+  ApiLibraryValidationFailedResponse,
+} from '../decorator';
 import { CreateLibraryDto, LibraryDto } from '../model';
 import { LibraryService } from '../service';
 
@@ -37,27 +39,16 @@ export class LibraryController {
    * @param createLibraryDto - The DTO containing the data for the new library.
    * @returns A promise that resolves to the created `LibraryDto`.
    */
-  @ApiOperation({
-    summary: 'Create a new library',
-    description:
-      'Accepts a library name and path, and creates a new library resource.',
-  })
+  @ApiLibraryCreateOperation()
   @ApiResponse({
     status: HttpStatus.CREATED,
-    description:
-      'The library was successfully created. Returns the created library data.',
-    type: LibraryDto,
+    description: 'The library was successfully created.',
+    type: () => LibraryDto,
   })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description:
-      'Validation failed. One or more input properties are incorrect or missing.',
-  })
-  @ApiResponse({
-    status: HttpStatus.CONFLICT,
-    description:
-      'The provided library path is not unique. A library with the same path already exists.',
-  })
+  @ApiLibraryValidationFailedResponse()
+  @ApiLibraryUnauthorizedResponse()
+  @ApiLibraryForbiddenResponse()
+  @ApiLibraryPathConflictResponse()
   @Post()
   @HttpCode(HttpStatus.CREATED)
   public async create(

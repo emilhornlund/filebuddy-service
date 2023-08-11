@@ -1,4 +1,10 @@
-import { ApiProperty } from '@nestjs/swagger';
+import {
+  ApiLibraryCreatedAtProperty,
+  ApiLibraryIdProperty,
+  ApiLibraryNameProperty,
+  ApiLibraryPathProperty,
+  ApiLibraryUpdatedAtProperty,
+} from '../decorator';
 
 /**
  * Data Transfer Object representing a library.
@@ -7,46 +13,30 @@ export class LibraryDto {
   /**
    * Unique identifier for the library.
    */
-  @ApiProperty({
-    description: 'Unique identifier for the library',
-    required: true,
-  })
+  @ApiLibraryIdProperty()
   id: string;
 
   /**
    * The name of the library.
    */
-  @ApiProperty({ description: 'Name of the library', required: true })
+  @ApiLibraryNameProperty()
   name: string;
 
   /**
    * The path where the library resides.
    */
-  @ApiProperty({
-    description: 'Path where the library resides',
-    required: true,
-  })
+  @ApiLibraryPathProperty()
   path: string;
 
   /**
    * The date and time when the library was created.
    */
-  @ApiProperty({
-    name: 'created_at',
-    description: 'The date and time the library was created',
-    type: Date,
-    required: true,
-  })
+  @ApiLibraryCreatedAtProperty()
   createdAt: Date;
 
   /**
    * The date and time when the library was last updated.
    */
-  @ApiProperty({
-    name: 'updated_at',
-    description: 'The date and time the library was last updated',
-    type: Date,
-    required: true,
-  })
+  @ApiLibraryUpdatedAtProperty()
   updatedAt: Date;
 }

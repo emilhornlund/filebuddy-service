@@ -17,8 +17,8 @@ import { IsNotEmpty, Length, Matches } from 'class-validator';
  *   name: string;
  * }
  */
-export function IsName() {
-  return applyDecorators(
+export const IsName = () =>
+  applyDecorators(
     IsNotEmpty({
       message: ({ property }) => `${property} should not be empty`,
     }),
@@ -31,4 +31,3 @@ export function IsName() {
         `${property} must contain only alphanumeric characters`,
     }),
   );
-}

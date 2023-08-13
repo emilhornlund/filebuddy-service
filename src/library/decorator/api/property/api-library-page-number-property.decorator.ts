@@ -1,9 +1,10 @@
 import { ApiProperty, ApiPropertyOptions } from '@nestjs/swagger';
 
 import {
-  LIBRARY_QUERY_DEFAULT_PAGE,
-  LIBRARY_QUERY_MINIMUM_PAGE_NUMBER,
-} from '../../../utility/library-query-constants.utility';
+  DEFAULT_PAGE_NUMBER,
+  MAXIMUM_PAGE_NUMBER,
+  MINIMUM_PAGE_NUMBER,
+} from '../../../../app/utility/page-constants.utility';
 
 /**
  * Decorator to describe the API property for a library query page.
@@ -19,8 +20,9 @@ export const ApiLibraryPageNumberProperty = (options?: ApiPropertyOptions) =>
   ApiProperty({
     description: 'The number of the page to be retrieved.',
     type: Number,
-    default: LIBRARY_QUERY_DEFAULT_PAGE,
-    minimum: LIBRARY_QUERY_MINIMUM_PAGE_NUMBER,
+    default: DEFAULT_PAGE_NUMBER,
+    minimum: MINIMUM_PAGE_NUMBER,
+    maximum: MAXIMUM_PAGE_NUMBER,
     required: false,
     ...options,
   });

@@ -3,16 +3,17 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Not, Repository } from 'typeorm';
 
 import { toPageDto } from '../../app/model/response';
+import { SortDirection } from '../../app/model/response/enum';
+import {
+  DEFAULT_PAGE_NUMBER,
+  DEFAULT_PAGE_SIZE,
+} from '../../app/utility/page-constants.utility';
+import { DEFAULT_SORT_DIRECTION } from '../../app/utility/sort-constants.utility';
 import { LibraryNotFoundException, PathNotUniqueException } from '../exception';
 import { LibraryEntity } from '../model/entity';
-import { LibrarySortDirection, LibrarySortOrder } from '../model/enum';
+import { LibrarySortOrder } from '../model/enum';
 import { LibraryResponse, PagedLibraryResponse } from '../model/response';
-import {
-  LIBRARY_QUERY_DEFAULT_PAGE,
-  LIBRARY_QUERY_DEFAULT_PAGE_SIZE,
-  LIBRARY_QUERY_DEFAULT_SORT_DIRECTION,
-  LIBRARY_QUERY_DEFAULT_SORT_ORDER,
-} from '../utility/library-query-constants.utility';
+import { LIBRARY_DEFAULT_SORT_ORDER } from '../utility/library-sort-constants.utility';
 
 /**
  * A service that handles library-related operations.
@@ -57,18 +58,18 @@ export class LibraryService {
 
   /**
    * Fetches all libraries from the data store and provides pagination and sorting functionality.
-   * @param page - The number of the page to fetch. Defaults to `LIBRARY_QUERY_DEFAULT_PAGE`.
-   * @param size - The number of items per page. Defaults to `LIBRARY_QUERY_DEFAULT_PAGE_SIZE`.
-   * @param order - The field by which to order the results. Defaults to `LIBRARY_QUERY_DEFAULT_SORT_ORDER`.
-   * @param direction - The order type (ASC or DESC). Defaults to `LIBRARY_QUERY_DEFAULT_SORT_DIRECTION`.
+   * @param page - The number of the page to fetch. Defaults to `DEFAULT_PAGE_NUMBER`.
+   * @param size - The number of items per page. Defaults to `DEFAULT_PAGE_SIZE`.
+   * @param order - The field by which to order the results. Defaults to `LIBRARY_DEFAULT_SORT_ORDER`.
+   * @param direction - The order type (ASC or DESC). Defaults to `DEFAULT_SORT_DIRECTION`.
    * @param nameFilter - Optional name filter to apply to the library names.
    * @returns - A promise that will resolve to a `LibraryPageDto` containing the fetched libraries and page information.
    */
   public async findAll(
-    page: number = LIBRARY_QUERY_DEFAULT_PAGE,
-    size: number = LIBRARY_QUERY_DEFAULT_PAGE_SIZE,
-    order: LibrarySortOrder = LIBRARY_QUERY_DEFAULT_SORT_ORDER,
-    direction: LibrarySortDirection = LIBRARY_QUERY_DEFAULT_SORT_DIRECTION,
+    page: number = DEFAULT_PAGE_NUMBER,
+    size: number = DEFAULT_PAGE_SIZE,
+    order: LibrarySortOrder = LIBRARY_DEFAULT_SORT_ORDER,
+    direction: SortDirection = DEFAULT_SORT_DIRECTION,
     nameFilter?: string,
   ): Promise<PagedLibraryResponse> {
     const skip = page * size;

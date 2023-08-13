@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptions } from '@nestjs/swagger';
 
-import { LibrarySortDirection } from '../../../model/enum';
-import { LIBRARY_QUERY_DEFAULT_SORT_DIRECTION } from '../../../utility/library-query-constants.utility';
+import { SortDirection } from '../../../../app/model/response/enum';
+import { DEFAULT_SORT_DIRECTION } from '../../../../app/utility/sort-constants.utility';
 
 /**
  * Decorator to describe the API property for the sort direction of a library query.
@@ -17,8 +17,8 @@ import { LIBRARY_QUERY_DEFAULT_SORT_DIRECTION } from '../../../utility/library-q
 export const ApiLibrarySortDirectionProperty = (options?: ApiPropertyOptions) =>
   ApiProperty({
     description: 'The direction to be used for sorting the libraries.',
-    enum: LibrarySortDirection,
-    default: LIBRARY_QUERY_DEFAULT_SORT_DIRECTION,
+    enum: SortDirection,
+    default: DEFAULT_SORT_DIRECTION,
     required: false,
     ...options,
   });

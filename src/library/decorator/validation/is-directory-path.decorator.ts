@@ -19,8 +19,8 @@ import { IsNotEmpty, Matches } from 'class-validator';
  *   path: string;
  * }
  */
-export function IsDirectoryPath() {
-  return applyDecorators(
+export const IsDirectoryPath = () =>
+  applyDecorators(
     IsNotEmpty({
       message: ({ property }) => `${property} should not be empty`,
     }),
@@ -29,4 +29,3 @@ export function IsDirectoryPath() {
         `${property} must be a valid directory path, starting with a '/' and containing only valid characters. The path should not end with a filename and extension.`,
     }),
   );
-}

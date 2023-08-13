@@ -3,11 +3,12 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
+import { SortDirection } from '../../app/model/response/enum';
 import { FileEntity } from '../../file/model/entity';
 import { FileService } from '../../file/service';
 import { LibraryNotFoundException, PathNotUniqueException } from '../exception';
 import { LibraryEntity } from '../model/entity';
-import { LibrarySortDirection, LibrarySortOrder } from '../model/enum';
+import { LibrarySortOrder } from '../model/enum';
 import { LibraryService } from './library.service';
 
 describe('LibraryService', () => {
@@ -119,7 +120,7 @@ describe('LibraryService', () => {
         1,
         5,
         LibrarySortOrder.NAME,
-        LibrarySortDirection.ASC,
+        SortDirection.ASC,
         'test',
       );
 

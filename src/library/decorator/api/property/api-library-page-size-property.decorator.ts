@@ -1,10 +1,10 @@
 import { ApiProperty, ApiPropertyOptions } from '@nestjs/swagger';
 
 import {
-  LIBRARY_QUERY_DEFAULT_PAGE_SIZE,
-  LIBRARY_QUERY_MAXIMUM_PAGE_SIZE,
-  LIBRARY_QUERY_MINIMUM_PAGE_SIZE,
-} from '../../../utility/library-query-constants.utility';
+  DEFAULT_PAGE_SIZE,
+  MAXIMUM_PAGE_SIZE,
+  MINIMUM_PAGE_SIZE,
+} from '../../../../app/utility/page-constants.utility';
 
 /**
  * Decorator to describe the API property for the size of a library query page.
@@ -20,9 +20,9 @@ export const ApiLibraryPageSizeProperty = (options?: ApiPropertyOptions) =>
   ApiProperty({
     description: 'The number of libraries to be retrieved per page.',
     type: Number,
-    default: LIBRARY_QUERY_DEFAULT_PAGE_SIZE,
-    minimum: LIBRARY_QUERY_MINIMUM_PAGE_SIZE,
-    maximum: LIBRARY_QUERY_MAXIMUM_PAGE_SIZE,
+    default: DEFAULT_PAGE_SIZE,
+    minimum: MINIMUM_PAGE_SIZE,
+    maximum: MAXIMUM_PAGE_SIZE,
     required: false,
     ...options,
   });

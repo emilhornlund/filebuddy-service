@@ -5,15 +5,14 @@ import { Like, Repository } from 'typeorm';
 import { toPageDto } from '../../app/model/response';
 import { FileNotFoundException } from '../exception';
 import { FileEntity } from '../model/entity';
+import { FileSortDirection, FileSortOrder } from '../model/enum';
+import { FileResponse, PagedFileResponse } from '../model/response';
 import {
   FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION,
   FILE_QUERY_DEFAULT_FILE_SORT_ORDER,
   FILE_QUERY_DEFAULT_PAGE,
   FILE_QUERY_DEFAULT_PAGE_SIZE,
-  FileSortDirection,
-  FileSortOrder,
-} from '../model/query';
-import { FileResponse, PagedFileResponse } from '../model/response';
+} from '../utility/file-query-constants.utility';
 
 /**
  * A service that handles file-related operations.

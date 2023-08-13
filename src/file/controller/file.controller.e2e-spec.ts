@@ -13,7 +13,7 @@ import {
   FILE_QUERY_MAXIMUM_PAGE_SIZE,
   FILE_QUERY_MINIMUM_PAGE_NUMBER,
   FILE_QUERY_MINIMUM_PAGE_SIZE,
-} from '../model/query';
+} from '../utility/file-query-constants.utility';
 
 describe('FileController (e2e)', () => {
   let app: INestApplication;

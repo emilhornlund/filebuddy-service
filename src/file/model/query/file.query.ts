@@ -1,43 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 
-export const ParseIntProperty = (): PropertyDecorator =>
-  Transform(({ value }) => parseInt(value, 10));
-
-/** The minimum allowed page number */
-export const FILE_QUERY_MINIMUM_PAGE_NUMBER: number = 0;
-/** The default page number if not specified */
-export const FILE_QUERY_DEFAULT_PAGE: number = FILE_QUERY_MINIMUM_PAGE_NUMBER;
-/** The minimum allowed number of files per page */
-export const FILE_QUERY_MINIMUM_PAGE_SIZE: number = 10;
-/** The maximum allowed number of files per page */
-export const FILE_QUERY_MAXIMUM_PAGE_SIZE: number = 50;
-/** The default number of files per page if not specified */
-export const FILE_QUERY_DEFAULT_PAGE_SIZE: number =
-  FILE_QUERY_MINIMUM_PAGE_SIZE;
-
-/** Enum representing possible sorting orders for files */
-export enum FileSortOrder {
-  NAME = 'NAME',
-  SIZE = 'SIZE',
-  CREATED_AT = 'CREATED_AT',
-  UPDATED_AT = 'UPDATED_AT',
-}
-
-/** The default sorting order for files if not specified */
-export const FILE_QUERY_DEFAULT_FILE_SORT_ORDER: FileSortOrder =
-  FileSortOrder.CREATED_AT;
-
-/** Enum representing possible sorting directions for files */
-export enum FileSortDirection {
-  ASC = 'ASC',
-  DESC = 'DESC',
-}
-
-/** The default sorting direction for files if not specified */
-export const FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION: FileSortDirection =
-  FileSortDirection.DESC;
+import { TransformIntProperty } from '../../../app/utility/transform-int-property.utility';
+import {
+  FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION,
+  FILE_QUERY_DEFAULT_FILE_SORT_ORDER,
+  FILE_QUERY_DEFAULT_PAGE,
+  FILE_QUERY_DEFAULT_PAGE_SIZE,
+  FILE_QUERY_MAXIMUM_PAGE_SIZE,
+  FILE_QUERY_MINIMUM_PAGE_NUMBER,
+  FILE_QUERY_MINIMUM_PAGE_SIZE,
+} from '../../utility/file-query-constants.utility';
+import { FileSortDirection, FileSortOrder } from '../enum';
 
 /** Class representing a file query, which includes pagination and sorting options */
 export class FileQuery {
@@ -54,7 +28,7 @@ export class FileQuery {
   @IsInt()
   @Min(FILE_QUERY_MINIMUM_PAGE_NUMBER)
   @IsOptional()
-  @ParseIntProperty()
+  @TransformIntProperty()
   page: number = FILE_QUERY_DEFAULT_PAGE;
 
   /**
@@ -72,7 +46,7 @@ export class FileQuery {
   @Min(FILE_QUERY_MINIMUM_PAGE_SIZE)
   @Max(FILE_QUERY_MAXIMUM_PAGE_SIZE)
   @IsOptional()
-  @ParseIntProperty()
+  @TransformIntProperty()
   size: number = FILE_QUERY_DEFAULT_PAGE_SIZE;
 
   /**

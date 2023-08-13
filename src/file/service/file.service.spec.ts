@@ -7,7 +7,7 @@ import { LibraryEntity } from '../../library/model/entity';
 import { LibraryService } from '../../library/service';
 import { FileNotFoundException } from '../exception';
 import { FileEntity } from '../model/entity';
-import { FileSortDirection, FileSortOrder } from '../model/query';
+import { FileSortDirection, FileSortOrder } from '../model/enum';
 import { FileService } from './file.service';
 
 describe('FileService', () => {

@@ -2,18 +2,17 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
 
 import { LibraryService } from '../../library/service';
+import { FileSortDirection, FileSortOrder } from '../model/enum';
 import { FileIdParam } from '../model/param';
+import { FileQuery } from '../model/query';
+import { FileResponse, PagedFileResponse } from '../model/response';
+import { FileService } from '../service';
 import {
   FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION,
   FILE_QUERY_DEFAULT_FILE_SORT_ORDER,
   FILE_QUERY_DEFAULT_PAGE,
   FILE_QUERY_DEFAULT_PAGE_SIZE,
-  FileQuery,
-  FileSortDirection,
-  FileSortOrder,
-} from '../model/query';
-import { FileResponse, PagedFileResponse } from '../model/response';
-import { FileService } from '../service';
+} from '../utility/file-query-constants.utility';
 import { FileController } from './file.controller';
 
 describe('FileController', () => {

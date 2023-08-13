@@ -1,37 +1,31 @@
-import { ApiProperty } from '@nestjs/swagger';
+import {
+  ApiFileCreatedAtProperty,
+  ApiFileIdProperty,
+  ApiFileNameProperty,
+  ApiFileSizeProperty,
+  ApiFileTypeProperty,
+  ApiFileUpdatedAtProperty,
+} from '../../decorator/api/property';
 
 /**
  * Response object representing a file.
  */
 export class FileResponse {
-  @ApiProperty({
-    description: 'Unique identifier for the file',
-    required: true,
-  })
+  @ApiFileIdProperty()
   id: string;
 
-  @ApiProperty({ description: 'Name of the file', required: true })
+  @ApiFileNameProperty()
   name: string;
 
-  @ApiProperty({ description: 'Type of the file', required: true })
+  @ApiFileTypeProperty()
   type: string;
 
-  @ApiProperty({ description: 'Size of the file', required: true })
+  @ApiFileSizeProperty()
   size: number;
 
-  @ApiProperty({
-    name: 'created_at',
-    description: 'The date and time the file was created',
-    type: Date,
-    required: true,
-  })
+  @ApiFileCreatedAtProperty()
   createdAt: Date;
 
-  @ApiProperty({
-    name: 'updated_at',
-    description: 'The date and time the file was last updated',
-    type: Date,
-    required: true,
-  })
+  @ApiFileUpdatedAtProperty()
   updatedAt: Date;
 }

@@ -1,43 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
 import { IsEnum, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 
-const ParseIntProperty = (): PropertyDecorator =>
-  Transform(({ value }) => parseInt(value, 10));
-
-/** The minimum allowed page number */
-export const LIBRARY_QUERY_MINIMUM_PAGE_NUMBER: number = 0;
-/** The default page number if not specified */
-export const LIBRARY_QUERY_DEFAULT_PAGE: number =
-  LIBRARY_QUERY_MINIMUM_PAGE_NUMBER;
-/** The minimum allowed number of libraries per page */
-export const LIBRARY_QUERY_MINIMUM_PAGE_SIZE: number = 10;
-/** The maximum allowed number of libraries per page */
-export const LIBRARY_QUERY_MAXIMUM_PAGE_SIZE: number = 50;
-/** The default number of libraries per page if not specified */
-export const LIBRARY_QUERY_DEFAULT_PAGE_SIZE: number =
-  LIBRARY_QUERY_MINIMUM_PAGE_SIZE;
-
-/** Enum representing possible sorting orders for libraries */
-export enum LibrarySortOrder {
-  NAME = 'NAME',
-  CREATED_AT = 'CREATED_AT',
-  UPDATED_AT = 'UPDATED_AT',
-}
-
-/** The default sorting order for libraries if not specified */
-export const LIBRARY_QUERY_DEFAULT_SORT_ORDER: LibrarySortOrder =
-  LibrarySortOrder.CREATED_AT;
-
-/** Enum representing possible sorting directions for libraries */
-export enum LibrarySortDirection {
-  ASC = 'ASC',
-  DESC = 'DESC',
-}
-
-/** The default sorting direction for libraries if not specified */
-export const LIBRARY_QUERY_DEFAULT_SORT_DIRECTION: LibrarySortDirection =
-  LibrarySortDirection.DESC;
+import { TransformIntProperty } from '../../../app/utility/transform-int-property.utility';
+import {
+  LIBRARY_QUERY_DEFAULT_PAGE,
+  LIBRARY_QUERY_DEFAULT_PAGE_SIZE,
+  LIBRARY_QUERY_DEFAULT_SORT_DIRECTION,
+  LIBRARY_QUERY_DEFAULT_SORT_ORDER,
+  LIBRARY_QUERY_MAXIMUM_PAGE_SIZE,
+  LIBRARY_QUERY_MINIMUM_PAGE_NUMBER,
+  LIBRARY_QUERY_MINIMUM_PAGE_SIZE,
+} from '../../utility/file-query-constants.utility';
+import { LibrarySortDirection, LibrarySortOrder } from '../enum';
 
 /** Class representing a library query, which includes pagination and sorting options */
 export class LibraryQuery {
@@ -54,7 +28,7 @@ export class LibraryQuery {
   @IsInt()
   @Min(LIBRARY_QUERY_MINIMUM_PAGE_NUMBER)
   @IsOptional()
-  @ParseIntProperty()
+  @TransformIntProperty()
   page: number = LIBRARY_QUERY_DEFAULT_PAGE;
 
   /**
@@ -72,7 +46,7 @@ export class LibraryQuery {
   @Min(LIBRARY_QUERY_MINIMUM_PAGE_SIZE)
   @Max(LIBRARY_QUERY_MAXIMUM_PAGE_SIZE)
   @IsOptional()
-  @ParseIntProperty()
+  @TransformIntProperty()
   size: number = LIBRARY_QUERY_DEFAULT_PAGE_SIZE;
 
   /**

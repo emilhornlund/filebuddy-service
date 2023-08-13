@@ -5,15 +5,14 @@ import { Like, Not, Repository } from 'typeorm';
 import { toPageDto } from '../../app/model/response';
 import { LibraryNotFoundException, PathNotUniqueException } from '../exception';
 import { LibraryEntity } from '../model/entity';
+import { LibrarySortDirection, LibrarySortOrder } from '../model/enum';
+import { LibraryResponse, PagedLibraryResponse } from '../model/response';
 import {
   LIBRARY_QUERY_DEFAULT_PAGE,
   LIBRARY_QUERY_DEFAULT_PAGE_SIZE,
   LIBRARY_QUERY_DEFAULT_SORT_DIRECTION,
   LIBRARY_QUERY_DEFAULT_SORT_ORDER,
-  LibrarySortDirection,
-  LibrarySortOrder,
-} from '../model/query';
-import { LibraryResponse, PagedLibraryResponse } from '../model/response';
+} from '../utility/file-query-constants.utility';
 
 /**
  * A service that handles library-related operations.

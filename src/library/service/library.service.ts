@@ -12,7 +12,7 @@ import {
   LIBRARY_QUERY_DEFAULT_PAGE_SIZE,
   LIBRARY_QUERY_DEFAULT_SORT_DIRECTION,
   LIBRARY_QUERY_DEFAULT_SORT_ORDER,
-} from '../utility/file-query-constants.utility';
+} from '../utility/library-query-constants.utility';
 
 /**
  * A service that handles library-related operations.

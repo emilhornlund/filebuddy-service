@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AppModule } from '../../app';
-import { AuthoritiesDto } from '../../auth';
+import { AuthoritiesDto } from '../../auth/model/security';
 import { FileEntity } from '../model/entity';
 import {
   FILE_QUERY_MAXIMUM_PAGE_SIZE,

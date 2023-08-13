@@ -13,7 +13,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { Authorities, AuthoritiesDto } from '../../auth';
+import { Authorities } from '../../auth/decorator/security';
+import { AuthoritiesDto } from '../../auth/model/security';
 import { FileIdParam } from '../model/param';
 import { FileQuery } from '../model/query';
 import { FileResponse, PagedFileResponse } from '../model/response';

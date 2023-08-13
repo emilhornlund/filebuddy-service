@@ -3,8 +3,8 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
-import { FileService } from '../../file';
 import { FileEntity } from '../../file/model/entity';
+import { FileService } from '../../file/service';
 import { LibraryNotFoundException, PathNotUniqueException } from '../exception';
 import { LibraryEntity } from '../model/entity';
 import { LibrarySortDirection, LibrarySortOrder } from '../model/query';

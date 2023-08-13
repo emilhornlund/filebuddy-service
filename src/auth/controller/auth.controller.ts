@@ -6,8 +6,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 
-import { Authorities, Public } from '../decorator';
-import { AuthoritiesDto, TokenDto, UsernamePasswordDto } from '../model';
+import { Authorities, Public } from '../decorator/security';
+import { UsernamePasswordDto } from '../model/request';
+import { TokenResponse } from '../model/response';
+import { AuthoritiesDto } from '../model/security';
 import { AuthService } from '../service';
 
 /**
@@ -48,14 +50,14 @@ export class AuthController {
     status: 200,
     description:
       'Authentication was successful. Returns access and refresh tokens.',
-    type: TokenDto,
+    type: TokenResponse,
   })
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('token')
   authenticate(
     @Body() usernamePasswordDto: UsernamePasswordDto,
-  ): Promise<TokenDto> {
+  ): Promise<TokenResponse> {
     return this.authService.authenticate(
       usernamePasswordDto.username,
       usernamePasswordDto.password,
@@ -83,12 +85,12 @@ export class AuthController {
     status: 200,
     description:
       'Token refresh was successful. Returns refreshed access and refresh tokens.',
-    type: TokenDto,
+    type: TokenResponse,
   })
   @Authorities(AuthoritiesDto.REFRESH)
   @HttpCode(HttpStatus.OK)
   @Post('refresh')
-  refresh(): Promise<TokenDto> {
+  refresh(): Promise<TokenResponse> {
     return this.authService.refresh();
   }
 }

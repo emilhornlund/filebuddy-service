@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IsPassword, IsUsername } from '../decorator';
+import { IsPassword, IsUsername } from '../../decorator/validation';
 
 /**
  * Data Transfer Object (DTO) representing the user's login credentials.

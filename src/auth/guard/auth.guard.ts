@@ -8,8 +8,8 @@ import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 
-import { AUTHORITIES_KEY, IS_PUBLIC_KEY } from '../decorator';
-import { AuthoritiesDto, JwtPayloadDto } from '../model';
+import { AUTHORITIES_KEY, IS_PUBLIC_KEY } from '../decorator/security';
+import { AuthoritiesDto, JwtPayloadDto } from '../model/security';
 
 /**
  * Guard to protect routes and validate JWTs.

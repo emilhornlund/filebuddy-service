@@ -1,6 +1,6 @@
 import { SetMetadata } from '@nestjs/common';
 
-import { AuthoritiesDto } from '../model';
+import { AuthoritiesDto } from '../../model/security';
 
 /**
  * @module

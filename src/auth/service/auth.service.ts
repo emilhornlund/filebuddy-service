@@ -3,7 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { v4 as uuidv4 } from 'uuid';
 
-import { AuthoritiesDto, JwtPayloadDto, TokenDto } from '../model';
+import { TokenResponse } from '../model/response';
+import { AuthoritiesDto, JwtPayloadDto } from '../model/security';
 
 /**
  * Service to manage authentication operations such as signing JWTs and authentication users.
@@ -36,7 +37,7 @@ export class AuthService {
   public async authenticate(
     username: string,
     password: string,
-  ): Promise<TokenDto> {
+  ): Promise<TokenResponse> {
     const rootUsername = this.configService.get<string>(
       'SECURITY_ROOT_USERNAME',
     );
@@ -59,7 +60,7 @@ export class AuthService {
    *
    * @returns The new JWT tokens.
    */
-  public async refresh(): Promise<TokenDto> {
+  public async refresh(): Promise<TokenResponse> {
     const rootUsername = this.configService.get<string>(
       'SECURITY_ROOT_USERNAME',
     );

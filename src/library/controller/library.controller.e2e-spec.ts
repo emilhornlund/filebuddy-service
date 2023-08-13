@@ -6,7 +6,7 @@ import * as request from 'supertest';
 import { Repository } from 'typeorm';
 
 import { AppModule } from '../../app';
-import { AuthoritiesDto } from '../../auth';
+import { AuthoritiesDto } from '../../auth/model/security';
 import { LibraryEntity } from '../model/entity';
 import { CreateLibraryRequest } from '../model/request';
 

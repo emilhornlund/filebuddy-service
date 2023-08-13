@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { v4 as uuidv4 } from 'uuid';
 
-import { FileService } from '../../file';
+import { FileService } from '../../file/service';
 import { LibraryResponse } from '../model/response';
 import { LibraryService } from '../service';
 import { LibraryController } from './library.controller';

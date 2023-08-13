@@ -5,9 +5,9 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 
-import { AuthModule } from '../../auth';
-import { FileModule } from '../../file';
-import { LibraryModule } from '../../library';
+import { AuthModule } from '../../auth/module';
+import { FileModule } from '../../file/module';
+import { LibraryModule } from '../../library/module';
 import { AllExceptionsFilter } from '../filter';
 import {
   TransformRequestInterceptor,

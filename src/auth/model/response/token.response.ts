@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 /**
  * Data Transfer Object (DTO) representing the token response from the server.
  */
-export class TokenDto {
+export class TokenResponse {
   /**
    * The access token used for user authentication.
    * @ApiProperty Decorator that adds metadata for Swagger API.

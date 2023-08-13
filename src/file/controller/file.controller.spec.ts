@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { of } from 'rxjs';
 
-import { LibraryService } from '../../library';
+import { LibraryService } from '../../library/service';
 import { FileIdParam } from '../model/param';
 import {
   FILE_QUERY_DEFAULT_FILE_SORT_DIRECTION,

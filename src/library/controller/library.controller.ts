@@ -1,7 +1,8 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { Authorities, AuthoritiesDto } from '../../auth';
+import { Authorities } from '../../auth/decorator/security';
+import { AuthoritiesDto } from '../../auth/model/security';
 import { ApiLibraryCreateOperation } from '../decorator/api/operation';
 import {
   ApiLibraryCreatedResponse,

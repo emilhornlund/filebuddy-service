@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Like, Repository } from 'typeorm';
 
-import { toPageDto } from '../../app';
+import { toPageDto } from '../../app/model/response';
 import { FileNotFoundException } from '../exception';
 import { FileEntity } from '../model/entity';
 import {

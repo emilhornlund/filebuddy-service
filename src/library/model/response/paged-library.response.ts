@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-import { IPageDto, PaginationDto } from '../../../app';
+import { IPageDto, PaginationDto } from '../../../app/model/response';
 import { LibraryResponse } from './library.response';
 
 /**

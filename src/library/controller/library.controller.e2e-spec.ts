@@ -5,7 +5,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import * as request from 'supertest';
 import { Repository } from 'typeorm';
 
-import { AppModule } from '../../app';
+import { AppModule } from '../../app/module';
 import { AuthoritiesDto } from '../../auth/model/security';
 import { LibraryEntity } from '../model/entity';
 import { CreateLibraryRequest } from '../model/request';

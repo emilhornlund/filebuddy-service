@@ -6,7 +6,7 @@ import * as request from 'supertest';
 import { Repository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
-import { AppModule } from '../../app';
+import { AppModule } from '../../app/module';
 import { AuthoritiesDto } from '../../auth/model/security';
 import { FileEntity } from '../model/entity';
 import {

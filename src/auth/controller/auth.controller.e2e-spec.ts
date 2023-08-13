@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 
-import { AppModule } from '../../app';
+import { AppModule } from '../../app/module';
 import { AuthoritiesDto } from '../model/security';
 
 describe('AuthController (e2e)', () => {

@@ -16,7 +16,7 @@ import { LibrarySortDirection, LibrarySortOrder } from '../enum';
 /** Class representing a library query, which includes pagination and sorting options */
 export class LibraryQuery {
   /**
-   * Represents the page number to fetch. It defaults to LIBRARY_QUERY_DEFAULT_PAGE if not specified.
+   * Represents the page number to fetch. It defaults to `LIBRARY_QUERY_DEFAULT_PAGE` if not specified.
    */
   @ApiProperty({
     description: 'The number of the page to be retrieved',
@@ -32,7 +32,7 @@ export class LibraryQuery {
   page: number = LIBRARY_QUERY_DEFAULT_PAGE;
 
   /**
-   * Represents the size of the page (i.e., the number of libraries per page). It defaults to LIBRARY_QUERY_DEFAULT_PAGE_SIZE if not specified.
+   * Represents the size of the page (i.e., the number of libraries per page). It defaults to `LIBRARY_QUERY_DEFAULT_PAGE_SIZE` if not specified.
    */
   @ApiProperty({
     description: 'The number of libraries to be retrieved per page',
@@ -50,7 +50,7 @@ export class LibraryQuery {
   size: number = LIBRARY_QUERY_DEFAULT_PAGE_SIZE;
 
   /**
-   * Represents the field by which to sort the libraries. It defaults to LIBRARY_QUERY_DEFAULT_LIBRARY_SORT_ORDER if not specified.
+   * Represents the field by which to sort the libraries. It defaults to `LIBRARY_QUERY_DEFAULT_SORT_ORDER` if not specified.
    */
   @ApiProperty({
     description: 'The field to be used for sorting the libraries',
@@ -63,7 +63,7 @@ export class LibraryQuery {
   order: LibrarySortOrder = LIBRARY_QUERY_DEFAULT_SORT_ORDER;
 
   /**
-   * Represents the direction of the sort (ascending or descending). It defaults to LIBRARY_QUERY_DEFAULT_LIBRARY_SORT_DIRECTION if not specified.
+   * Represents the direction of the sort (ascending or descending). It defaults to `LIBRARY_QUERY_DEFAULT_SORT_DIRECTION` if not specified.
    */
   @ApiProperty({
     description: 'The direction to be used for sorting the libraries',

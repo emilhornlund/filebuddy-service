@@ -1,9 +1,9 @@
 import { HttpStatus } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 
-import { buildErrorResponseSchema } from '../../../utility';
+import { buildErrorResponseSchema } from '../../../library/utility';
 
-export const ApiLibraryUnauthorizedResponse = () =>
+export const ApiAuthUnauthorizedResponse = () =>
   ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description:

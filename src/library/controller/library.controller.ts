@@ -1,14 +1,16 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+import {
+  ApiAuthForbiddenResponse,
+  ApiAuthUnauthorizedResponse,
+} from '../../auth/decorator/api';
 import { Authorities } from '../../auth/decorator/security';
 import { AuthoritiesDto } from '../../auth/model/security';
 import { ApiLibraryCreateOperation } from '../decorator/api/operation';
 import {
   ApiLibraryCreatedResponse,
-  ApiLibraryForbiddenResponse,
   ApiLibraryPathConflictResponse,
-  ApiLibraryUnauthorizedResponse,
   ApiLibraryValidationFailedResponse,
 } from '../decorator/api/response';
 import { CreateLibraryRequest } from '../model/request';
@@ -45,9 +47,9 @@ export class LibraryController {
   @ApiLibraryCreateOperation()
   @ApiLibraryCreatedResponse()
   @ApiLibraryValidationFailedResponse()
-  @ApiLibraryUnauthorizedResponse()
-  @ApiLibraryForbiddenResponse()
   @ApiLibraryPathConflictResponse()
+  @ApiAuthUnauthorizedResponse()
+  @ApiAuthForbiddenResponse(AuthoritiesDto.LIBRARY_MANAGEMENT)
   @Post()
   @HttpCode(HttpStatus.CREATED)
   public async create(

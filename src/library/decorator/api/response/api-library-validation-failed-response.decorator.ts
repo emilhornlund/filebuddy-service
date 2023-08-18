@@ -3,6 +3,13 @@ import { ApiResponse } from '@nestjs/swagger';
 
 import { buildErrorResponseSchema } from '../../../utility';
 
+/**
+ * Provides an API response decorator for library validation failures.
+ *
+ * Indicates that one or more input properties were incorrect or missing during the library creation process.
+ *
+ * @returns {Function} An ApiResponse decorator configured for library validation failures.
+ */
 export const ApiLibraryValidationFailedResponse = () =>
   ApiResponse({
     status: HttpStatus.BAD_REQUEST,

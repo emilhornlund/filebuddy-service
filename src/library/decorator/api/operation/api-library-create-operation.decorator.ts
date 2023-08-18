@@ -1,5 +1,13 @@
 import { ApiOperation } from '@nestjs/swagger';
 
+/**
+ * Provides an API operation decorator for the creation of a new library.
+ *
+ * This decorator describes the endpoint that allows users to create a new library in the system.
+ * It details the expected input format, potential status codes, and conditions for errors.
+ *
+ * @returns {Function} An ApiOperation decorator configured for the library creation operation.
+ */
 export const ApiLibraryCreateOperation = () =>
   ApiOperation({
     summary: 'Creates a new library.',

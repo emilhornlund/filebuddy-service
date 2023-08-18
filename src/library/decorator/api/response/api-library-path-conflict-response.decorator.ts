@@ -3,6 +3,13 @@ import { ApiResponse } from '@nestjs/swagger';
 
 import { buildErrorResponseSchema } from '../../../utility';
 
+/**
+ * Provides an API response decorator for library path conflict.
+ *
+ * Indicates that the provided library path already exists in the system.
+ *
+ * @returns {Function} An ApiResponse decorator configured for library path conflict.
+ */
 export const ApiLibraryPathConflictResponse = () =>
   ApiResponse({
     status: HttpStatus.CONFLICT,
